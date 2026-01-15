@@ -88,9 +88,9 @@ Continue to questioning.
 </step>
 
 <step name="questioning">
-**CRITICAL: ALL questions use Numbered List. Never ask inline text questions.**
+**CRITICAL: ALL questions use AskUserQuestion. Never ask inline text questions.**
 
-Present initial context from roadmap, then immediately use Numbered List:
+Present initial context from roadmap, then immediately use AskUserQuestion:
 
 ```
 Phase ${PHASE}: ${PHASE_NAME}
@@ -100,28 +100,28 @@ From the roadmap: ${PHASE_DESCRIPTION}
 
 **1. Open:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Vision"
 - question: "How do you imagine this working?"
 - options: 2-3 interpretations based on the phase description + "Let me describe it"
 
 **2. Follow the thread:**
 
-Based on their response, use Numbered List:
+Based on their response, use AskUserQuestion:
 - header: "[Topic they mentioned]"
 - question: "You mentioned [X] — what would that look like?"
 - options: 2-3 interpretations + "Something else"
 
 **3. Sharpen the core:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Essential"
 - question: "What's the most important part of this phase?"
 - options: Key aspects they've mentioned + "All equally important" + "Something else"
 
 **4. Capture specifics (optional):**
 
-If they seem to have specific ideas, use Numbered List:
+If they seem to have specific ideas, use AskUserQuestion:
 - header: "Specifics"
 - question: "Any particular look/feel/behavior in mind?"
 - options: Contextual options based on what they've said + "No specifics" + "Let me describe"
@@ -135,7 +135,7 @@ CRITICAL — What NOT to ask:
 
 **5. Decision gate:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Ready?"
 - question: "Ready to capture this context, or explore more?"
 - options (ALL THREE REQUIRED):

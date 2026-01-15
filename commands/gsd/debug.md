@@ -22,9 +22,9 @@ Debug issues using scientific method with subagent isolation for investigation.
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/debug.md
-@~/.claude/get-shit-done/templates/DEBUG.md
-@~/.claude/get-shit-done/templates/debug-subagent-prompt.md
+@~/.gemini/get-shit-done/workflows/debug.md
+@~/.gemini/get-shit-done/templates/DEBUG.md
+@~/.gemini/get-shit-done/templates/debug-subagent-prompt.md
 </execution_context>
 
 <context>
@@ -136,8 +136,8 @@ Read this file - it contains all evidence gathered so far.
 </checkpoint_response>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/debug.md
-@~/.claude/get-shit-done/templates/DEBUG.md
+@~/.gemini/get-shit-done/workflows/debug.md
+@~/.gemini/get-shit-done/templates/DEBUG.md
 </execution_context>
 
 <instructions>

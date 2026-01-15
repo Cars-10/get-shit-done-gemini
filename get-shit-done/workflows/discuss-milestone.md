@@ -127,7 +127,7 @@ Write milestone context to file for handoff.
 
 **File:** `.planning/MILESTONE-CONTEXT.md`
 
-Use template from ~/.claude/get-shit-done/templates/milestone-context.md
+Use template from ~/.gemini/get-shit-done/templates/milestone-context.md
 
 Populate with:
 - Features identified during discussion

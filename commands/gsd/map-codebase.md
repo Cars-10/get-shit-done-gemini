@@ -20,14 +20,14 @@ Output: .planning/codebase/ folder with 7 structured documents about the codebas
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/map-codebase.md
-@~/.claude/get-shit-done/templates/codebase/stack.md
-@~/.claude/get-shit-done/templates/codebase/architecture.md
-@~/.claude/get-shit-done/templates/codebase/structure.md
-@~/.claude/get-shit-done/templates/codebase/conventions.md
-@~/.claude/get-shit-done/templates/codebase/testing.md
-@~/.claude/get-shit-done/templates/codebase/integrations.md
-@~/.claude/get-shit-done/templates/codebase/concerns.md
+@~/.gemini/get-shit-done/workflows/map-codebase.md
+@~/.gemini/get-shit-done/templates/codebase/stack.md
+@~/.gemini/get-shit-done/templates/codebase/architecture.md
+@~/.gemini/get-shit-done/templates/codebase/structure.md
+@~/.gemini/get-shit-done/templates/codebase/conventions.md
+@~/.gemini/get-shit-done/templates/codebase/testing.md
+@~/.gemini/get-shit-done/templates/codebase/integrations.md
+@~/.gemini/get-shit-done/templates/codebase/concerns.md
 </execution_context>
 
 <context>

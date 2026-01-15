@@ -162,10 +162,10 @@ Execute each wave in sequence. Autonomous plans within a wave run in parallel.
    </objective>
 
    <execution_context>
-   @~/.claude/get-shit-done/workflows/execute-plan.md
-   @~/.claude/get-shit-done/templates/summary.md
-   @~/.claude/get-shit-done/references/checkpoints.md
-   @~/.claude/get-shit-done/references/tdd.md
+   @~/.gemini/get-shit-done/workflows/execute-plan.md
+   @~/.gemini/get-shit-done/templates/summary.md
+   @~/.gemini/get-shit-done/references/checkpoints.md
+   @~/.gemini/get-shit-done/references/tdd.md
    </execution_context>
 
    <context>
@@ -299,7 +299,7 @@ Plans with `autonomous: false` require user interaction.
 8. **Repeat until plan completes or user stops**
 
 **Why fresh agent instead of resume:**
-Resume relies on Claude Code's internal serialization which breaks with parallel tool calls.
+Resume relies on Gemini CLI's internal serialization which breaks with parallel tool calls.
 Fresh agents with explicit state are more reliable and maintain full context.
 
 **Checkpoint in parallel context:**

@@ -7,7 +7,7 @@ This is used after completing a milestone when ready to define the next chunk of
 <required_reading>
 **Read these files NOW:**
 
-1. ~/.claude/get-shit-done/templates/roadmap.md (milestone-grouped format)
+1. ~/.gemini/get-shit-done/templates/roadmap.md (milestone-grouped format)
 2. `.planning/ROADMAP.md`
 3. `.planning/STATE.md`
 4. `.planning/MILESTONES.md` (if exists)
@@ -133,7 +133,7 @@ Apply research triggers from create-roadmap.md:
 | "real-time", "websocket", "sync", "live updates"      | Architectural decision                  |
 | "deploy", "Vercel", "Railway", "hosting"              | If first deployment - config patterns   |
 | "choose between", "select", "evaluate", "which"       | Explicit decision needed                |
-| "AI", "OpenAI", "Claude", "LLM", "embeddings"         | Fast-moving APIs - need current docs    |
+| "AI", "OpenAI", "Gemini", "LLM", "embeddings"         | Fast-moving APIs - need current docs    |
 | Any technology not already in codebase                | New integration                         |
 
 **Unlikely (no flag needed):**

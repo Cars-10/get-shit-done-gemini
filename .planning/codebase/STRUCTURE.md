@@ -6,7 +6,7 @@
 
 ```
 get-shit-done-gemini/
-├── .claude/            # Claude-specific implementation
+├── .gemini/            # Gemini-specific implementation
 ├── .gemini/            # Gemini-specific implementation
 ├── bin/                # Installation scripts
 │   └── install.js      # Main installer
@@ -38,7 +38,7 @@ get-shit-done-gemini/
 - Purpose: Guiding principles and standards
 - Contains: TDD guides, questioning frameworks, and git integration rules
 
-**.gemini/ / .claude/:**
+**.gemini/ / .gemini/:**
 - Purpose: Target-specific implementations
 - Contains: Mirrored structure for different AI agents
 

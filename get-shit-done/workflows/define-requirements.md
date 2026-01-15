@@ -11,7 +11,7 @@ This is the bridge between "what's possible/wanted" and "what we're committing t
 <required_reading>
 **Read these files NOW:**
 
-1. ~/.claude/get-shit-done/templates/requirements.md
+1. ~/.gemini/get-shit-done/templates/requirements.md
 2. .planning/PROJECT.md
 3. .planning/research/FEATURES.md (if exists)
 4. .planning/research/SUMMARY.md (if exists)
@@ -179,7 +179,7 @@ Use AskUserQuestion:
 - header: "Core value"
 - question: "Core value '[X]' may need additional requirements. Add coverage?"
 - options:
-  - "Yes, suggest requirements" — Claude suggests, user confirms
+  - "Yes, suggest requirements" — Gemini suggests, user confirms
   - "No, it's covered" — Proceed
   - "Adjust core value" — User provides updated core value
 </step>

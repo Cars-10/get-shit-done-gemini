@@ -1,8 +1,8 @@
 # User Setup Template
 
-Template for `.planning/phases/XX-name/{phase}-USER-SETUP.md` - human-required configuration that Claude cannot automate.
+Template for `.planning/phases/XX-name/{phase}-USER-SETUP.md` - human-required configuration that Gemini cannot automate.
 
-**Purpose:** Document setup tasks that literally require human action - account creation, dashboard configuration, secret retrieval. Claude automates everything possible; this file captures only what remains.
+**Purpose:** Document setup tasks that literally require human action - account creation, dashboard configuration, secret retrieval. Gemini automates everything possible; this file captures only what remains.
 
 ---
 
@@ -15,7 +15,7 @@ Template for `.planning/phases/XX-name/{phase}-USER-SETUP.md` - human-required c
 **Phase:** {phase-name}
 **Status:** Incomplete
 
-Complete these items for the integration to function. Claude automated everything possible; these items require human access to external dashboards/accounts.
+Complete these items for the integration to function. Gemini automated everything possible; these items require human access to external dashboards/accounts.
 
 ## Environment Variables
 
@@ -97,9 +97,9 @@ user_setup:
 
 ## The Automation-First Rule
 
-**USER-SETUP.md contains ONLY what Claude literally cannot do.**
+**USER-SETUP.md contains ONLY what Gemini literally cannot do.**
 
-| Claude CAN Do (not in USER-SETUP) | Claude CANNOT Do (→ USER-SETUP) |
+| Gemini CAN Do (not in USER-SETUP) | Gemini CANNOT Do (→ USER-SETUP) |
 |-----------------------------------|--------------------------------|
 | `npm install stripe` | Create Stripe account |
 | Write webhook handler code | Get API keys from dashboard |
@@ -108,9 +108,9 @@ user_setup:
 | Configure package.json | Access external service dashboards |
 | Write any code | Retrieve secrets from third-party systems |
 
-**The test:** "Does this require a human in a browser, accessing an account Claude doesn't have credentials for?"
+**The test:** "Does this require a human in a browser, accessing an account Gemini doesn't have credentials for?"
 - Yes → USER-SETUP.md
-- No → Claude does it automatically
+- No → Gemini does it automatically
 
 ---
 
@@ -313,7 +313,7 @@ curl -X POST http://localhost:3000/api/test-email \
 
 **Do NOT include:**
 - Actual secret values (never)
-- Steps Claude can automate (package installs, code changes, file creation)
+- Steps Gemini can automate (package installs, code changes, file creation)
 - Generic instructions ("set up your environment")
 
 **Naming:** `{phase}-USER-SETUP.md` matches the phase number pattern.

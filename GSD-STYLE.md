@@ -1,15 +1,15 @@
 # GSD-STYLE.md
 
-> **Comprehensive reference.** Core rules auto-load from `.claude/rules/`. This document provides deep explanations and examples for when you need the full picture.
+> **Comprehensive reference.** Core rules auto-load from `.gemini/rules/`. This document provides deep explanations and examples for when you need the full picture.
 
-This document explains how GSD is written so future Claude instances can contribute consistently.
+This document explains how GSD is written so future Gemini instances can contribute consistently.
 
 ## Core Philosophy
 
-GSD is a **meta-prompting system** where every file is both implementation and specification. Files teach Claude how to build software systematically. The system optimizes for:
+GSD is a **meta-prompting system** where every file is both implementation and specification. Files teach Gemini how to build software systematically. The system optimizes for:
 
-- **Solo developer + Claude workflow** (no enterprise patterns)
-- **Context engineering** (manage Claude's context window deliberately)
+- **Solo developer + Gemini workflow** (no enterprise patterns)
+- **Context engineering** (manage Gemini's context window deliberately)
 - **Plans as prompts** (PLAN.md files are executable, not documents to transform)
 
 ---
@@ -119,7 +119,7 @@ Build authentication system
 ```
 
 **Task types:**
-- `type="auto"` — Claude executes autonomously
+- `type="auto"` — Gemini executes autonomously
 - `type="checkpoint:human-verify"` — User must verify
 - `type="checkpoint:decision"` — User must choose
 
@@ -164,7 +164,7 @@ Build authentication system
 
 **Static references** (always load):
 ```
-@~/.claude/get-shit-done/workflows/execute-phase.md
+@~/.gemini/get-shit-done/workflows/execute-phase.md
 @.planning/PROJECT.md
 ```
 
@@ -173,7 +173,7 @@ Build authentication system
 @.planning/DISCOVERY.md (if exists)
 ```
 
-**@-references are lazy loading signals.** They tell Claude what to read, not pre-loaded content.
+**@-references are lazy loading signals.** They tell Gemini what to read, not pre-loaded content.
 
 ---
 
@@ -418,7 +418,7 @@ How to make tests pass
 3. **Commands delegate to workflows**
 4. **Progressive disclosure hierarchy**
 5. **Imperative, brief, technical** — no filler, no sycophancy
-6. **Solo developer + Claude** — no enterprise patterns
+6. **Solo developer + Gemini** — no enterprise patterns
 7. **Context size as quality constraint** — split aggressively
 8. **Temporal language banned** — current state only
 9. **Plans ARE prompts** — executable, not documents

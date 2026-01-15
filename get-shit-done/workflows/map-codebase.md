@@ -15,7 +15,7 @@ Each agent has fresh context and focuses on specific aspects. Output is concise 
 Include enough detail to be useful as reference. Prioritize practical examples (especially code patterns) over arbitrary brevity. A 200-line TESTING.md with real patterns is more valuable than a 74-line summary.
 
 **Always include file paths:**
-Documents are reference material for Claude when planning/executing. Vague descriptions like "UserService handles users" are not actionable. Always include actual file paths formatted with backticks: `src/services/user.ts`. This allows Claude to navigate directly to relevant code without re-searching. Do NOT include line numbers (they go stale), just file paths.
+Documents are reference material for Gemini when planning/executing. Vague descriptions like "UserService handles users" are not actionable. Always include actual file paths formatted with backticks: `src/services/user.ts`. This allows Gemini to navigate directly to relevant code without re-searching. Do NOT include line numbers (they go stale), just file paths.
 </philosophy>
 
 <process>
@@ -296,7 +296,7 @@ Write all 7 codebase documents using templates and agent findings.
 
 For each document:
 
-1. **Read template file** from `~/.claude/get-shit-done/templates/codebase/{name}.md`
+1. **Read template file** from `~/.gemini/get-shit-done/templates/codebase/{name}.md`
 2. **Extract the "File Template" section** - this is the markdown code block containing the actual document structure
 3. **Fill template placeholders** with agent findings:
    - Replace `[YYYY-MM-DD]` with current date

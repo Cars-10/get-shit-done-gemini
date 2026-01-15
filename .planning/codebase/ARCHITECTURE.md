@@ -18,7 +18,7 @@
 - Purpose: Entry point for user interactions within the AI agent
 - Contains: `gsd:` commands defined in `commands/gsd/` and `.gemini/commands/gsd/`
 - Depends on: Workflow layer
-- Used by: AI Agent (Claude/Gemini)
+- Used by: AI Agent (Gemini/Gemini)
 
 **Workflow Layer:**
 - Purpose: Multi-step procedures and complex logic

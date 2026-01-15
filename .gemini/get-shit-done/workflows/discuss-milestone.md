@@ -49,27 +49,27 @@ Continue to intake_gate.
 </step>
 
 <step name="intake_gate">
-**CRITICAL: ALL questions use Numbered List. Never ask inline text questions.**
+**CRITICAL: ALL questions use AskUserQuestion. Never ask inline text questions.**
 
 The primary question is: **What do you want to build/add/fix?**
 
 Everything else (scope, priority, constraints) is secondary and derived from features.
 
 Check for inputs:
-- Deferred issues from STATE.md (potential features)
+- Pending todos from STATE.md (potential features)
 - Known gaps or pain points from usage
 - User's ideas for what's next
 
 **1. Open:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Next"
 - question: "What do you want to add, improve, or fix in this milestone?"
-- options: [Deferred issues from STATE.md if any] + ["New features", "Improvements to existing", "Bug fixes", "Let me describe"]
+- options: [Pending todos from STATE.md if any] + ["New features", "Improvements to existing", "Bug fixes", "Let me describe"]
 
 **2. Explore features:**
 
-Based on their response, use Numbered List:
+Based on their response, use AskUserQuestion:
 
 If they named specific features:
 - header: "Feature Details"
@@ -84,11 +84,11 @@ If they described a general direction:
 If they're not sure:
 - header: "Starting Points"
 - question: "What's been frustrating or missing?"
-- options: [Deferred issues from STATE.md + pain point categories + "Let me think about it"]
+- options: [Pending todos from STATE.md + pain point categories + "Let me think about it"]
 
 **3. Prioritize:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Priority"
 - question: "Which of these matters most?"
 - options: [Features they mentioned + "All equally important" + "Let me prioritize"]
@@ -109,7 +109,7 @@ Based on what you described:
 
 **4. Decision gate:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Ready?"
 - question: "Ready to create the milestone, or explore more?"
 - options (ALL THREE REQUIRED):

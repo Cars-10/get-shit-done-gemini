@@ -75,7 +75,7 @@ Optimization targets:
 - Streamline `plan-phase.md` workflow (-9KB)
 
 ### Phase 5: TDD Instructions
-**Goal**: Add TDD guidance to GSD so Claude uses test-driven development when appropriate and beneficial
+**Goal**: Add TDD guidance to GSD so Gemini uses test-driven development when appropriate and beneficial
 **Depends on**: Phase 4
 **Research**: Unlikely (established TDD patterns, GSD integration points clear)
 **Plans**: 2 plans
@@ -95,7 +95,7 @@ Plans:
 - [ ] 06-02: Intelligent Selection - Implement frontmatter-based context assembly in plan-phase.md
 
 **Details:**
-Transform planning from "Claude guesses which summaries to read" to "System automatically assembles optimal context" by:
+Transform planning from "Gemini guesses which summaries to read" to "System automatically assembles optimal context" by:
 - Adding frontmatter with subsystem, requires/provides/affects, tech-stack, key-files, key-decisions
 - Scanning all summary frontmatter (fast - first ~25 lines each)
 - Building dependency graph to auto-select relevant prior phases
@@ -209,7 +209,7 @@ Plans:
 - Wave 2: 12-02, 12-03 (parallel - both depend only on 12-01)
 
 **Details:**
-Users adopting GSD need visibility into what changed between versions. The publish workflow generates curated changelog entries (Claude-drafted, Lex-approved). `/gsd:whats-new` fetches from GitHub raw, compares to installed version, and prompts to update if behind.
+Users adopting GSD need visibility into what changed between versions. The publish workflow generates curated changelog entries (Gemini-drafted, Lex-approved). `/gsd:whats-new` fetches from GitHub raw, compares to installed version, and prompts to update if behind.
 
 ### Phase 99: Test Parallel (THROWAWAY)
 

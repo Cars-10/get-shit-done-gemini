@@ -21,8 +21,8 @@ Context budget: ~15% orchestrator, 100% fresh for subagent.
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/references/principles.md
-@~/.claude/get-shit-done/templates/subagent-task-prompt.md
+@~/.gemini/get-shit-done/references/principles.md
+@~/.gemini/get-shit-done/templates/subagent-task-prompt.md
 </execution_context>
 
 <context>
@@ -328,8 +328,8 @@ Continue handling returns until "## PLAN COMPLETE" or user stops.
 <checkpoint_templates>
 Templates for checkpoint handling:
 
-- `@~/.claude/get-shit-done/templates/checkpoint-return.md` - Subagent return format
-- `@~/.claude/get-shit-done/templates/continuation-prompt.md` - Fresh agent spawn template
+- `@~/.gemini/get-shit-done/templates/checkpoint-return.md` - Subagent return format
+- `@~/.gemini/get-shit-done/templates/continuation-prompt.md` - Fresh agent spawn template
 </checkpoint_templates>
 
 <success_criteria>

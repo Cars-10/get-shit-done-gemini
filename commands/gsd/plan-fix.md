@@ -20,8 +20,8 @@ Output: {phase}-FIX.md in the phase directory, ready for execution.
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/references/plan-format.md
-@~/.claude/get-shit-done/references/checkpoints.md
+@~/.gemini/get-shit-done/references/plan-format.md
+@~/.gemini/get-shit-done/references/checkpoints.md
 </execution_context>
 
 <context>
@@ -180,8 +180,8 @@ Priority: {blocker count} blocker, {major count} major, {minor count} minor, {co
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/execute-plan.md
-@~/.claude/get-shit-done/templates/summary.md
+@~/.gemini/get-shit-done/workflows/execute-plan.md
+@~/.gemini/get-shit-done/templates/summary.md
 </execution_context>
 
 <context>

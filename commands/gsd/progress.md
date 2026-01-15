@@ -196,7 +196,7 @@ Check if `{phase}-CONTEXT.md` exists in phase directory.
 **Also available:**
 - `/gsd:discuss-phase {phase}` — gather context first
 - `/gsd:research-phase {phase}` — investigate unknowns
-- `/gsd:list-phase-assumptions {phase}` — see Claude's assumptions
+- `/gsd:list-phase-assumptions {phase}` — see Gemini's assumptions
 
 ---
 ```

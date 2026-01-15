@@ -79,7 +79,7 @@ Each task was committed atomically:
 ## Decisions Made
 - Used git mv for rename to preserve file history
 - Historical .planning/ documents intentionally keep old references (they document what happened at that time)
-- node_modules and .claude/ references are from old installs; installer refreshes them
+- node_modules and .gemini/ references are from old installs; installer refreshes them
 
 ## Deviations from Plan
 

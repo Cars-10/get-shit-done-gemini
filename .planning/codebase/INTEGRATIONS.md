@@ -5,7 +5,7 @@
 ## APIs & External Services
 
 **AI Agents:**
-- Claude Code - Primary execution environment for `.md` commands
+- Gemini CLI - Primary execution environment for `.md` commands
 - Gemini CLI - Secondary execution environment for `.toml` commands
 
 ## Data Storage
@@ -32,7 +32,7 @@
 ## CI/CD & Deployment
 
 **Hosting:**
-- Local Machine - Commands are installed to user's home directory (`~/.claude/` or `~/.gemini/`)
+- Local Machine - Commands are installed to user's home directory (`~/.gemini/` or `~/.gemini/`)
 
 **CI Pipeline:**
 - None detected - Project is currently managed manually

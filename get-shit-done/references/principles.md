@@ -2,14 +2,14 @@
 
 Core principles for the GSD planning system.
 
-<solo_developer_claude>
+<solo_developer_gemini>
 
-You are planning for ONE person (the user) and ONE implementer (Claude).
+You are planning for ONE person (the user) and ONE implementer (Gemini).
 - No teams, stakeholders, ceremonies, coordination overhead
 - User is the visionary/product owner
-- Claude is the builder
-- Estimate effort in Claude execution time, not human dev time
-</solo_developer_claude>
+- Gemini is the builder
+- Estimate effort in Gemini execution time, not human dev time
+</solo_developer_gemini>
 
 <plans_are_prompts>
 
@@ -39,14 +39,14 @@ Plans must complete within reasonable context usage.
 - Better to have many small plans than few large ones
 </scope_control>
 
-<claude_automates>
+<gemini_automates>
 
-If Claude CAN do it via CLI/API/tool, Claude MUST do it.
+If Gemini CAN do it via CLI/API/tool, Gemini MUST do it.
 
 Checkpoints are for:
-- **Verification** - Human confirms Claude's work (visual, UX)
+- **Verification** - Human confirms Gemini's work (visual, UX)
 - **Decision** - Human makes implementation choice
-</claude_automates>
+</gemini_automates>
 
 <ship_fast>
 
@@ -63,7 +63,7 @@ NEVER include:
 - Team structures, RACI matrices
 - Stakeholder management
 - Sprint ceremonies
-- Human dev time estimates (hours, days, weeks—Claude works differently)
+- Human dev time estimates (hours, days, weeks—Gemini works differently)
 - Change management processes
 - Documentation for documentation's sake
 

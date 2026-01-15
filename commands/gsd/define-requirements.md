@@ -22,9 +22,9 @@ Output: `.planning/REQUIREMENTS.md`
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/references/principles.md
-@~/.claude/get-shit-done/workflows/define-requirements.md
-@~/.claude/get-shit-done/templates/requirements.md
+@~/.gemini/get-shit-done/references/principles.md
+@~/.gemini/get-shit-done/workflows/define-requirements.md
+@~/.gemini/get-shit-done/templates/requirements.md
 </execution_context>
 
 <context>

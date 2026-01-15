@@ -2,16 +2,16 @@
 Plans must maintain consistent quality from first task to last. This requires understanding quality degradation and splitting aggressively.
 
 <quality_insight>
-Claude degrades when it *perceives* context pressure and enters "completion mode."
+Gemini degrades when it *perceives* context pressure and enters "completion mode."
 
-| Context Usage | Quality | Claude's State |
+| Context Usage | Quality | Gemini's State |
 |---------------|---------|----------------|
 | 0-30% | PEAK | Thorough, comprehensive |
 | 30-50% | GOOD | Confident, solid work |
 | 50-70% | DEGRADING | Efficiency mode begins |
 | 70%+ | POOR | Rushed, minimal |
 
-**The 40-50% inflection point:** Claude sees context mounting and thinks "I'd better conserve now." Result: "I'll complete the remaining tasks more concisely" = quality crash.
+**The 40-50% inflection point:** Gemini sees context mounting and thinks "I'd better conserve now." Result: "I'll complete the remaining tasks more concisely" = quality crash.
 
 **The rule:** Stop BEFORE quality degrades, not at context limit.
 </quality_insight>
@@ -56,7 +56,7 @@ TDD requires 2-3 execution cycles (RED → GREEN → REFACTOR), each with file r
 - Dedicated plans ensure full quality throughout RED-GREEN-REFACTOR
 - Each TDD feature gets fresh context, peak quality
 
-See `~/.claude/get-shit-done/references/tdd.md` for TDD plan structure.
+See `~/.gemini/get-shit-done/references/tdd.md` for TDD plan structure.
 </tdd_plans>
 
 <split_signals>

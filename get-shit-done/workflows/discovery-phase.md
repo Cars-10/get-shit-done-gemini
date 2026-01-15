@@ -22,13 +22,13 @@ NOTE: For comprehensive ecosystem research ("how do experts build this"), use /g
 <source_hierarchy>
 **MANDATORY: Context7 BEFORE WebSearch**
 
-Claude's training data is 6-18 months stale. Always verify.
+Gemini's training data is 6-18 months stale. Always verify.
 
 1. **Context7 MCP FIRST** - Current docs, no hallucination
 2. **Official docs** - When Context7 lacks coverage
 3. **WebSearch LAST** - For comparisons and trends only
 
-See ~/.claude/get-shit-done/templates/discovery.md `<discovery_protocol>` for full protocol.
+See ~/.gemini/get-shit-done/templates/discovery.md `<discovery_protocol>` for full protocol.
 </source_hierarchy>
 
 <process>
@@ -107,9 +107,9 @@ For: Choosing between options, new external integration.
 
 5. **Cross-verify:** Any WebSearch finding → confirm with Context7/official docs.
 
-6. **Quality check:** Before finalizing findings, consult ~/.claude/get-shit-done/references/research-pitfalls.md to avoid common research gaps.
+6. **Quality check:** Before finalizing findings, consult ~/.gemini/get-shit-done/references/research-pitfalls.md to avoid common research gaps.
 
-7. **Create DISCOVERY.md** using ~/.claude/get-shit-done/templates/discovery.md structure:
+7. **Create DISCOVERY.md** using ~/.gemini/get-shit-done/templates/discovery.md structure:
 
    - Summary with recommendation
    - Key findings per option
@@ -128,7 +128,7 @@ For: Architectural decisions, novel problems, high-risk choices.
 
 **Process:**
 
-1. **Scope the discovery** using ~/.claude/get-shit-done/templates/discovery.md:
+1. **Scope the discovery** using ~/.gemini/get-shit-done/templates/discovery.md:
 
    - Define clear scope
    - Define include/exclude boundaries
@@ -160,11 +160,11 @@ For: Architectural decisions, novel problems, high-risk choices.
    - Mark what's verified vs assumed
    - Flag contradictions
 
-6. **Quality check:** Before finalizing findings, consult ~/.claude/get-shit-done/references/research-pitfalls.md to ensure comprehensive coverage and avoid common research gaps.
+6. **Quality check:** Before finalizing findings, consult ~/.gemini/get-shit-done/references/research-pitfalls.md to ensure comprehensive coverage and avoid common research gaps.
 
 7. **Create comprehensive DISCOVERY.md:**
 
-   - Full structure from ~/.claude/get-shit-done/templates/discovery.md
+   - Full structure from ~/.gemini/get-shit-done/templates/discovery.md
    - Quality report with source attribution
    - Confidence by finding
    - If LOW confidence on any critical finding → add validation checkpoints
@@ -188,7 +188,7 @@ Ask: What do we need to learn before we can plan this phase?
   </step>
 
 <step name="create_discovery_scope">
-Use ~/.claude/get-shit-done/templates/discovery.md.
+Use ~/.gemini/get-shit-done/templates/discovery.md.
 
 Include:
 

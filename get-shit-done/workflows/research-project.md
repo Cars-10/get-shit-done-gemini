@@ -27,11 +27,11 @@ With it, phases reflect how experts actually build these systems.
 <required_reading>
 **Read these files NOW:**
 
-1. ~/.claude/get-shit-done/templates/research-project/SUMMARY.md
-2. ~/.claude/get-shit-done/templates/research-project/STACK.md
-3. ~/.claude/get-shit-done/templates/research-project/FEATURES.md
-4. ~/.claude/get-shit-done/templates/research-project/ARCHITECTURE.md
-5. ~/.claude/get-shit-done/templates/research-project/PITFALLS.md
+1. ~/.gemini/get-shit-done/templates/research-project/SUMMARY.md
+2. ~/.gemini/get-shit-done/templates/research-project/STACK.md
+3. ~/.gemini/get-shit-done/templates/research-project/FEATURES.md
+4. ~/.gemini/get-shit-done/templates/research-project/ARCHITECTURE.md
+5. ~/.gemini/get-shit-done/templates/research-project/PITFALLS.md
 6. .planning/PROJECT.md
 </required_reading>
 
@@ -126,7 +126,7 @@ Instructions:
 When complete, write your findings to: .planning/research/STACK.md
 
 Use this template structure:
-- Read ~/.claude/get-shit-done/templates/research-project/STACK.md for format
+- Read ~/.gemini/get-shit-done/templates/research-project/STACK.md for format
 - Include specific version numbers and rationale
 - Cite sources with confidence levels (HIGH/MEDIUM/LOW)
 - Be specific: versions, library names, exact patterns
@@ -152,7 +152,7 @@ Instructions:
 When complete, write your findings to: .planning/research/FEATURES.md
 
 Use this template structure:
-- Read ~/.claude/get-shit-done/templates/research-project/FEATURES.md for format
+- Read ~/.gemini/get-shit-done/templates/research-project/FEATURES.md for format
 - Categorize as table stakes / differentiators / anti-features
 - Note complexity and dependencies between features
 - Cite sources with confidence levels (HIGH/MEDIUM/LOW)
@@ -178,7 +178,7 @@ Instructions:
 When complete, write your findings to: .planning/research/ARCHITECTURE.md
 
 Use this template structure:
-- Read ~/.claude/get-shit-done/templates/research-project/ARCHITECTURE.md for format
+- Read ~/.gemini/get-shit-done/templates/research-project/ARCHITECTURE.md for format
 - Include system diagrams (ASCII)
 - Document component responsibilities and boundaries
 - Cite sources with confidence levels (HIGH/MEDIUM/LOW)
@@ -204,7 +204,7 @@ Instructions:
 When complete, write your findings to: .planning/research/PITFALLS.md
 
 Use this template structure:
-- Read ~/.claude/get-shit-done/templates/research-project/PITFALLS.md for format
+- Read ~/.gemini/get-shit-done/templates/research-project/PITFALLS.md for format
 - Include warning signs and prevention strategies
 - Note which phase should address each pitfall
 - Cite sources with confidence levels (HIGH/MEDIUM/LOW)

@@ -133,7 +133,7 @@ Loop until "Create PROJECT.md" selected.
 - **Rushing** — Minimizing questions to get to "the work"
 - **Shallow acceptance** — Taking vague answers without probing
 - **Premature constraints** — Asking about tech stack before understanding the idea
-- **User skills** — NEVER ask about user's technical experience. Claude builds.
+- **User skills** — NEVER ask about user's technical experience. Gemini builds.
 
 </anti_patterns>
 

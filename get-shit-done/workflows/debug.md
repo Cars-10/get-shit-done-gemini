@@ -21,7 +21,7 @@ All debug files use the `.planning/debug/` path (hidden directory with leading d
 </paths>
 
 <philosophy>
-**User = reporter. Claude = investigator.**
+**User = reporter. Gemini = investigator.**
 
 The user knows:
 - What they expected to happen
@@ -38,15 +38,15 @@ Ask about experience. Investigate the cause yourself.
 </philosophy>
 
 <references>
-@~/.claude/get-shit-done/references/debugging/debugging-mindset.md
-@~/.claude/get-shit-done/references/debugging/hypothesis-testing.md
-@~/.claude/get-shit-done/references/debugging/investigation-techniques.md
-@~/.claude/get-shit-done/references/debugging/verification-patterns.md
-@~/.claude/get-shit-done/references/debugging/when-to-research.md
+@~/.gemini/get-shit-done/references/debugging/debugging-mindset.md
+@~/.gemini/get-shit-done/references/debugging/hypothesis-testing.md
+@~/.gemini/get-shit-done/references/debugging/investigation-techniques.md
+@~/.gemini/get-shit-done/references/debugging/verification-patterns.md
+@~/.gemini/get-shit-done/references/debugging/when-to-research.md
 </references>
 
 <template>
-@~/.claude/get-shit-done/templates/DEBUG.md
+@~/.gemini/get-shit-done/templates/DEBUG.md
 </template>
 
 <checkpoint_behavior>

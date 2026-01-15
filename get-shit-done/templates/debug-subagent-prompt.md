@@ -21,11 +21,11 @@ Symptoms are pre-filled. Skip symptom gathering, start investigating immediately
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/debug.md
-@~/.claude/get-shit-done/templates/DEBUG.md
-@~/.claude/get-shit-done/references/debugging/debugging-mindset.md
-@~/.claude/get-shit-done/references/debugging/hypothesis-testing.md
-@~/.claude/get-shit-done/references/debugging/investigation-techniques.md
+@~/.gemini/get-shit-done/workflows/debug.md
+@~/.gemini/get-shit-done/templates/DEBUG.md
+@~/.gemini/get-shit-done/references/debugging/debugging-mindset.md
+@~/.gemini/get-shit-done/references/debugging/hypothesis-testing.md
+@~/.gemini/get-shit-done/references/debugging/investigation-techniques.md
 </execution_context>
 
 <symptoms>
@@ -339,9 +339,9 @@ Read this file first - it contains all evidence gathered so far.
 </mode>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/debug.md
-@~/.claude/get-shit-done/templates/DEBUG.md
-@~/.claude/get-shit-done/references/debugging/debugging-mindset.md
+@~/.gemini/get-shit-done/workflows/debug.md
+@~/.gemini/get-shit-done/templates/DEBUG.md
+@~/.gemini/get-shit-done/references/debugging/debugging-mindset.md
 </execution_context>
 
 <instructions>

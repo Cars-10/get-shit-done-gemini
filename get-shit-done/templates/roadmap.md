@@ -15,7 +15,7 @@ Template for `.planning/ROADMAP.md`.
 
 [Paths to domain skills that inform planning. These SKILL.md files serve as indexes - during phase planning, read them to find relevant references for each phase type.]
 
-- ~/.claude/skills/expertise/[domain]/SKILL.md
+- ~/.gemini/skills/expertise/[domain]/SKILL.md
 [Add additional domains if project spans multiple (e.g., ISF shaders + macOS app)]
 
 Or: None

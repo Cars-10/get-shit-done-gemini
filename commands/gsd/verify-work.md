@@ -14,14 +14,14 @@ allowed-tools:
 <objective>
 Validate built features through conversational testing with persistent state.
 
-Purpose: Confirm what Claude built actually works from user's perspective. One test at a time, plain text responses, no interrogation.
+Purpose: Confirm what Gemini built actually works from user's perspective. One test at a time, plain text responses, no interrogation.
 
 Output: {phase}-UAT.md tracking all test results, issues logged for /gsd:plan-fix
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/verify-work.md
-@~/.claude/get-shit-done/templates/UAT.md
+@~/.gemini/get-shit-done/workflows/verify-work.md
+@~/.gemini/get-shit-done/templates/UAT.md
 </execution_context>
 
 <context>

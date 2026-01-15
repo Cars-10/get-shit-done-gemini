@@ -15,11 +15,11 @@ Decimal phases enable urgent work insertion without renumbering:
 <required_reading>
 **Read these files NOW:**
 
-1. ~/.claude/get-shit-done/templates/phase-prompt.md
-2. ~/.claude/get-shit-done/references/plan-format.md
-3. ~/.claude/get-shit-done/references/scope-estimation.md
-4. ~/.claude/get-shit-done/references/checkpoints.md
-5. ~/.claude/get-shit-done/references/tdd.md
+1. ~/.gemini/get-shit-done/templates/phase-prompt.md
+2. ~/.gemini/get-shit-done/references/plan-format.md
+3. ~/.gemini/get-shit-done/references/scope-estimation.md
+4. ~/.gemini/get-shit-done/references/checkpoints.md
+5. ~/.gemini/get-shit-done/references/tdd.md
 6. .planning/ROADMAP.md
 7. .planning/PROJECT.md
 
@@ -32,7 +32,7 @@ Decimal phases enable urgent work insertion without renumbering:
 <purpose>
 Create executable phase prompts (PLAN.md files) optimized for parallel execution.
 
-PLAN.md IS the prompt that Claude executes. Plans are grouped into execution waves based on dependencies - independent plans run in parallel, dependent plans wait for predecessors.
+PLAN.md IS the prompt that Gemini executes. Plans are grouped into execution waves based on dependencies - independent plans run in parallel, dependent plans wait for predecessors.
 </purpose>
 
 <planning_principles>
@@ -281,13 +281,13 @@ Standard tasks (remain in standard plans):
 
 **Test framework:** If project has no test setup and TDD plans are needed, the first TDD plan's RED phase handles framework setup as part of writing the first test.
 
-See `~/.claude/get-shit-done/references/tdd.md` for TDD plan structure.
+See `~/.gemini/get-shit-done/references/tdd.md` for TDD plan structure.
 
 **Checkpoints:** Visual/functional verification → checkpoint:human-verify. Implementation choices → checkpoint:decision. Manual action (email, 2FA) → checkpoint:human-action (rare).
 
 **Critical:** If external resource has CLI/API (Vercel, Stripe, etc.), use type="auto" to automate. Only checkpoint for verification AFTER automation.
 
-See ~/.claude/get-shit-done/references/checkpoints.md for checkpoint structure.
+See ~/.gemini/get-shit-done/references/checkpoints.md for checkpoint structure.
 
 **User setup detection:** For tasks involving external services, identify human-required configuration:
 
@@ -500,7 +500,7 @@ For quick depth:
 
 **Each plan must be:** 2-3 tasks max, ~50% context target, independently committable.
 
-See ~/.claude/get-shit-done/references/scope-estimation.md for complete guidance.
+See ~/.gemini/get-shit-done/references/scope-estimation.md for complete guidance.
 </step>
 
 <step name="confirm_breakdown">
@@ -547,7 +547,7 @@ Wait for confirmation. If "adjust": revise. If "start over": return to gather_ph
 </step>
 
 <step name="write_phase_prompt">
-Use template from `~/.claude/get-shit-done/templates/phase-prompt.md`.
+Use template from `~/.gemini/get-shit-done/templates/phase-prompt.md`.
 
 **Single plan:** Write to `.planning/phases/XX-name/{phase}-01-PLAN.md`
 
@@ -599,12 +599,12 @@ user_setup:
       - "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
 ```
 
-**Automation-first rule:** Only include setup Claude literally cannot do:
+**Automation-first rule:** Only include setup Gemini literally cannot do:
 - Account creation (requires human signup)
 - Secret retrieval (requires dashboard access)
 - Dashboard configuration (requires human in browser)
 
-Do NOT include: npm install, code changes, file creation, CLI commands Claude can run.
+Do NOT include: npm install, code changes, file creation, CLI commands Gemini can run.
 
 **Wave is pre-computed:** Wave numbers are assigned during planning (see `assign_waves` step). `/gsd:execute-phase` reads `wave` directly from frontmatter and groups plans by wave number. No runtime dependency analysis needed.
 
@@ -635,9 +635,9 @@ Only include prior plan SUMMARY references if this plan genuinely needs decision
 Include checkpoint reference in execution_context:
 ```markdown
 <execution_context>
-@~/.claude/get-shit-done/workflows/execute-plan.md
-@~/.claude/get-shit-done/templates/summary.md
-@~/.claude/get-shit-done/references/checkpoints.md
+@~/.gemini/get-shit-done/workflows/execute-plan.md
+@~/.gemini/get-shit-done/templates/summary.md
+@~/.gemini/get-shit-done/references/checkpoints.md
 </execution_context>
 ```
 
@@ -716,7 +716,7 @@ Wave 2: {plan-03}
 
 If you can't specify Files + Action + Verify + Done, the task is too vague.
 
-**TDD candidates get dedicated plans.** If "Create price calculator with discount rules" warrants TDD, create a TDD plan for it. See `~/.claude/get-shit-done/references/tdd.md` for TDD plan structure.
+**TDD candidates get dedicated plans.** If "Create price calculator with discount rules" warrants TDD, create a TDD plan for it. See `~/.gemini/get-shit-done/references/tdd.md` for TDD plan structure.
 </task_quality>
 
 <anti_patterns>
@@ -725,7 +725,7 @@ If you can't specify Files + Action + Verify + Done, the task is too vague.
 - No acceptance criteria committees
 - No sub-sub-sub tasks
 - **No reflexive sequential chaining** (Plan 02 depends on 01 "just because")
-Tasks are instructions for Claude, not Jira tickets.
+Tasks are instructions for Gemini, not Jira tickets.
 </anti_patterns>
 
 <success_criteria>

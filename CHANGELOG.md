@@ -220,7 +220,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - Parallel-first planning with dependency graphs
 - Checkpoint-resume capability for long-running phases
-- `.claude/rules/` directory for auto-loaded contribution rules
+- `.gemini/rules/` directory for auto-loaded contribution rules
 
 ### Changed
 - execute-phase uses wave-based blocking execution
@@ -321,7 +321,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [1.3.26] - 2026-01-06
 
 ### Added
-- Claude Code marketplace plugin support
+- Gemini CLI marketplace plugin support
 
 ### Fixed
 - Phase artifacts now committed when created
@@ -334,7 +334,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [1.3.24] - 2026-01-06
 
 ### Added
-- `CLAUDE_CONFIG_DIR` environment variable support
+- `GEMINI_CONFIG_DIR` environment variable support
 
 ## [1.3.23] - 2026-01-06
 
@@ -538,7 +538,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [1.2.0] - 2025-12-15
 
 ### Changed
-- Research workflow implemented as Claude Code context injection
+- Research workflow implemented as Gemini CLI context injection
 
 ## [1.1.2] - 2025-12-15
 

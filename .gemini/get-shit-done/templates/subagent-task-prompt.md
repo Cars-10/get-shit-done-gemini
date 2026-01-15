@@ -16,10 +16,10 @@ Commit each task atomically. Create SUMMARY.md. Update STATE.md.
 </objective>
 
 <execution_context>
-@~/.claude/get-shit-done/workflows/execute-plan.md
-@~/.claude/get-shit-done/templates/summary.md
-@~/.claude/get-shit-done/references/checkpoints.md
-@~/.claude/get-shit-done/references/tdd.md
+@./.gemini/get-shit-done/workflows/execute-plan.md
+@./.gemini/get-shit-done/templates/summary.md
+@./.gemini/get-shit-done/references/checkpoints.md
+@./.gemini/get-shit-done/references/tdd.md
 </execution_context>
 
 <context>
@@ -31,7 +31,7 @@ Config: @.planning/config.json (if exists)
 <checkpoint_behavior>
 When you encounter a checkpoint task (type="checkpoint:*") or auth gate, STOP execution and return using the structured format in:
 
-@~/.claude/get-shit-done/templates/checkpoint-return.md
+@./.gemini/get-shit-done/templates/checkpoint-return.md
 
 **Required in your return:**
 1. Completed Tasks table with commit hashes and files

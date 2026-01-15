@@ -15,7 +15,7 @@ Shows version comparison, changelog entries for missed versions, and update inst
 Read installed version from VERSION file:
 
 ```bash
-cat ~/.claude/get-shit-done/VERSION 2>/dev/null
+cat ~/.gemini/get-shit-done/VERSION 2>/dev/null
 ```
 
 **If VERSION file missing:**
@@ -26,7 +26,7 @@ cat ~/.claude/get-shit-done/VERSION 2>/dev/null
 
 Your installation doesn't include version tracking.
 
-**To fix:** `npx get-shit-done-cc --global`
+**To fix:** `npx get-shit-done-gemini --global`
 
 This will reinstall with version tracking enabled.
 ```
@@ -44,7 +44,7 @@ Use WebFetch tool with:
 **If fetch fails:**
 Fall back to local changelog:
 ```bash
-cat ~/.claude/get-shit-done/CHANGELOG.md 2>/dev/null
+cat ~/.gemini/get-shit-done/CHANGELOG.md 2>/dev/null
 ```
 
 Note to user: "Couldn't check for updates (offline or GitHub unavailable). Showing local changelog."
@@ -107,7 +107,7 @@ You're on the latest version.
 
 [View full changelog](https://github.com/glittercowboy/get-shit-done/blob/main/CHANGELOG.md)
 
-**To update:** `npx get-shit-done-cc --global`
+**To update:** `npx get-shit-done-gemini --global`
 ```
 
 **Breaking changes:** Surface prominently with **BREAKING:** prefix in the output.

@@ -30,7 +30,7 @@
 - Vitest - Prescribed for projects managed by this system (but not used for the repo itself)
 
 **Build/Dev:**
-- None - Logic is interpreted by AI agents (Claude/Gemini)
+- None - Logic is interpreted by AI agents (Gemini/Gemini)
 
 ## Key Dependencies
 
@@ -44,7 +44,7 @@
 ## Configuration
 
 **Environment:**
-- `CLAUDE_CONFIG_DIR` - Optional override for installation path
+- `GEMINI_CONFIG_DIR` - Optional override for installation path
 - Configuration also managed via `get-shit-done/templates/config.json`
 
 **Build:**
@@ -58,7 +58,7 @@
 - Git
 
 **Production:**
-- AI Agent environment (Claude Code or Gemini CLI)
+- AI Agent environment (Gemini CLI or Gemini CLI)
 - Filesystem access for `.planning/` directory management
 
 ---

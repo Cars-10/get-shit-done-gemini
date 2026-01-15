@@ -1,8 +1,24 @@
 <purpose>
 Systematic debugging with persistent state that survives context resets. The debug file IS the debugging brain - create it immediately and update it continuously.
 
-You are the debugger. The user knows what's wrong (behavior), not why (root cause). Gather symptoms, then investigate autonomously.
+You are the debugger. The user knows what's wrong (behavior), not why (root cause). Investigate autonomously.
+
+**Execution context:**
+- **Subagent (typical):** Orchestrator gathered symptoms, you investigate with fresh 200k context
+- **Main context (legacy):** Full interactive flow when not spawned as subagent
+
+**Modes:**
+- **symptoms_prefilled: true** — Symptoms provided, start investigating immediately
+- **goal: find_root_cause_only** — Diagnose but don't fix, return to caller
+- **goal: find_and_fix** — Find root cause, fix it, verify (default)
 </purpose>
+
+<paths>
+DEBUG_DIR=.planning/debug
+DEBUG_RESOLVED_DIR=.planning/debug/resolved
+
+All debug files use the `.planning/debug/` path (hidden directory with leading dot).
+</paths>
 
 <philosophy>
 **User = reporter. Gemini = investigator.**
@@ -33,13 +49,185 @@ Ask about experience. Investigate the cause yourself.
 @./.gemini/get-shit-done/templates/DEBUG.md
 </template>
 
+<checkpoint_behavior>
+**When running as subagent and you need user input:**
+
+If investigation requires user action or verification that you cannot perform:
+
+1. **Update debug file** with current state (Current Focus, Evidence so far)
+2. **Return structured checkpoint** instead of completing
+
+**Checkpoint return format:**
+
+```markdown
+## CHECKPOINT REACHED
+
+**Type:** [human-verify | human-action | decision]
+**Debug Session:** .planning/debug/{slug}.md
+**Progress:** {evidence_count} evidence entries, {eliminated_count} hypotheses eliminated
+
+### Investigation State
+
+**Current Hypothesis:** {from Current Focus}
+**Evidence So Far:**
+- {key finding 1}
+- {key finding 2}
+
+### Checkpoint Details
+
+[Type-specific content - see below]
+
+### Awaiting
+
+[What you need from user]
+```
+
+**Checkpoint types:**
+
+**human-verify:** Need user to confirm something you can't observe
+```markdown
+### Checkpoint Details
+
+**Need verification:** {what you need confirmed}
+
+**How to check:**
+1. {step 1}
+2. {step 2}
+
+**Tell me:** {what to report back}
+
+### Awaiting
+
+Describe what you see, or "confirmed" / "not seeing it"
+```
+
+**human-action:** Need user to do something (auth, physical action, etc.)
+```markdown
+### Checkpoint Details
+
+**Action needed:** {what user must do}
+
+**Why:** {why you can't do it}
+
+**Steps:**
+1. {step 1}
+2. {step 2}
+
+### Awaiting
+
+Type "done" when complete
+```
+
+**decision:** Need user to choose investigation direction
+```markdown
+### Checkpoint Details
+
+**Decision needed:** {what's being decided}
+
+**Context:** {why this matters for investigation}
+
+**Options:**
+- **A:** {option and implications}
+- **B:** {option and implications}
+
+### Awaiting
+
+Reply with A or B (or describe alternative)
+```
+
+**After checkpoint:** Orchestrator presents to user, gets response, spawns fresh continuation agent with your debug file + user response. You will NOT be resumed.
+</checkpoint_behavior>
+
+<structured_returns>
+**When investigation completes, return one of these:**
+
+**Root cause found:**
+```markdown
+## ROOT CAUSE FOUND
+
+**Debug Session:** .planning/debug/{slug}.md
+
+**Root Cause:** {specific cause with evidence}
+
+**Evidence Summary:**
+- {key finding 1}
+- {key finding 2}
+- {key finding 3}
+
+**Files Involved:**
+- {file1}: {what's wrong}
+- {file2}: {related issue}
+
+**Suggested Fix:** {brief direction, not implementation}
+```
+
+**Investigation inconclusive:**
+```markdown
+## INVESTIGATION INCONCLUSIVE
+
+**Debug Session:** .planning/debug/{slug}.md
+
+**What Was Checked:**
+- {area 1}: {finding}
+- {area 2}: {finding}
+
+**Hypotheses Eliminated:**
+- {hypothesis 1}: {why eliminated}
+- {hypothesis 2}: {why eliminated}
+
+**Remaining Possibilities:**
+- {possibility 1}
+- {possibility 2}
+
+**Recommendation:** {next steps or manual review needed}
+```
+
+**Fix complete (when goal is find_and_fix):**
+```markdown
+## DEBUG COMPLETE
+
+**Debug Session:** .planning/debug/resolved/{slug}.md
+
+**Root Cause:** {what was wrong}
+**Fix Applied:** {what was changed}
+**Verification:** {how verified}
+
+**Files Changed:**
+- {file1}: {change}
+- {file2}: {change}
+
+**Commit:** {hash}
+```
+</structured_returns>
+
+<modes>
+**Check for mode flags in prompt context:**
+
+**symptoms_prefilled: true**
+- Symptoms section already filled (from UAT or other source)
+- Skip `symptom_gathering` step entirely
+- Start directly at `investigation_loop`
+- Create debug file with status: "investigating" (not "gathering")
+
+**goal: find_root_cause_only**
+- Diagnose but don't fix
+- Stop after confirming root cause
+- Skip `fix_and_verify` step
+- Return root cause to caller (for plan-fix to handle)
+
+**Default mode (no flags):**
+- Interactive debugging with user
+- Gather symptoms through questions
+- Investigate, fix, and verify
+</modes>
+
 <process>
 
 <step name="check_active_session">
 **First: Check for active debug sessions**
 
 ```bash
-ls .planning/debug/*.md 2>/dev/null | grep -v resolved
+ls ${DEBUG_DIR}/*.md 2>/dev/null | grep -v resolved
 ```
 
 **If active sessions exist AND no $ARGUMENTS provided:**
@@ -90,7 +278,7 @@ Continue to `create_debug_file` with $ARGUMENTS as trigger.
 Generate slug from user input (lowercase, hyphens, max 30 chars).
 
 ```bash
-mkdir -p .planning/debug
+mkdir -p ${DEBUG_DIR}
 ```
 
 Create file with initial state:
@@ -134,7 +322,7 @@ verification:
 files_changed: []
 ```
 
-Write to `.planning/debug/[slug].md`
+Write to `${DEBUG_DIR}/[slug].md`
 
 Now proceed to `symptom_gathering`.
 </step>
@@ -146,7 +334,7 @@ CRITICAL: Update the debug file after each piece of information gathered.
 
 **1. Expected behavior:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Expected"
 - question: "What should happen?"
 - options: Contextual interpretations + "Let me describe"
@@ -155,7 +343,7 @@ After answer → Update Symptoms.expected in debug file
 
 **2. Actual behavior:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Actual"
 - question: "What actually happens instead?"
 - options: Common failure modes + "Let me describe"
@@ -164,7 +352,7 @@ After answer → Update Symptoms.actual in debug file
 
 **3. Error messages:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Errors"
 - question: "Any error messages?"
 - options:
@@ -177,7 +365,7 @@ After answer → Update Symptoms.errors in debug file
 
 **4. When it started:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Timeline"
 - question: "When did this start?"
 - options:
@@ -190,7 +378,7 @@ After answer → Update Symptoms.started in debug file
 
 **5. Reproduction:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Reproduce"
 - question: "How do you trigger this?"
 - options:
@@ -203,7 +391,7 @@ After answer → Update Symptoms.reproduction in debug file
 
 **6. Ready check:**
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Ready?"
 - question: "Enough context to investigate?"
 - options:
@@ -264,6 +452,12 @@ Append result to Evidence.
 
 If CONFIRMED:
 - Update Resolution.root_cause with evidence
+
+**If goal: find_root_cause_only:**
+- Update status to "diagnosed"
+- Proceed to `return_diagnosis` (skip fix_and_verify)
+
+**Otherwise (default):**
 - Update status to "fixing"
 - Proceed to `fix_and_verify`
 
@@ -307,6 +501,50 @@ Based on status:
 - "verifying" → Continue verification
 
 The file tells you exactly where you were.
+</step>
+
+<step name="return_diagnosis">
+**Return root cause without fixing (diagnose-only mode)**
+
+This step is used when `goal: find_root_cause_only` is set (e.g., from diagnose-issues workflow).
+
+Update status to "diagnosed".
+
+Return structured diagnosis:
+
+```
+## DEBUG COMPLETE: {issue_id}
+
+**Root Cause:** {from Resolution.root_cause}
+
+**Evidence:**
+{summary of key evidence entries}
+
+**Files Involved:**
+{files identified during investigation}
+
+**Debug Session:** {path to debug file}
+
+**Suggested Fix Direction:** {brief hint based on root cause}
+```
+
+If unable to determine root cause after thorough investigation:
+
+```
+## DEBUG INCONCLUSIVE: {issue_id}
+
+**Investigation Summary:**
+{what was checked}
+
+**Hypotheses Remaining:**
+{possible causes not yet eliminated}
+
+**Recommendation:** Manual review needed
+
+**Debug Session:** {path to debug file}
+```
+
+**Do NOT proceed to fix_and_verify.** The fix will be planned by /gsd:plan-fix using this diagnosis.
 </step>
 
 <step name="fix_and_verify">
@@ -363,8 +601,8 @@ If verification PASSES:
 Update status to "resolved".
 
 ```bash
-mkdir -p .planning/debug/resolved
-mv .planning/debug/[slug].md .planning/debug/resolved/
+mkdir -p ${DEBUG_RESOLVED_DIR}
+mv ${DEBUG_DIR}/[slug].md ${DEBUG_RESOLVED_DIR}/
 ```
 
 Commit:
@@ -373,7 +611,7 @@ git add -A
 git commit -m "fix: [brief description from Resolution.fix]
 
 Root cause: [from Resolution.root_cause]
-Debug session: .planning/debug/resolved/[slug].md"
+Debug session: ${DEBUG_RESOLVED_DIR}/[slug].md"
 ```
 
 Report:
@@ -384,10 +622,10 @@ Root cause: [root_cause]
 Fix: [fix]
 Files: [files_changed]
 
-Session archived: .planning/debug/resolved/[slug].md
+Session archived: ${DEBUG_RESOLVED_DIR}/[slug].md
 ```
 
-Use Numbered List:
+Use AskUserQuestion:
 - header: "Next"
 - question: "What now?"
 - options:

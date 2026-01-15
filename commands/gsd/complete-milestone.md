@@ -19,8 +19,8 @@ Output: Milestone archived, roadmap reorganized, git tagged.
 <execution_context>
 **Load these files NOW (before proceeding):**
 
-- @~/.claude/get-shit-done/workflows/complete-milestone.md (main workflow)
-- @~/.claude/get-shit-done/templates/milestone-archive.md (archive template)
+- @~/.gemini/get-shit-done/workflows/complete-milestone.md (main workflow)
+- @~/.gemini/get-shit-done/templates/milestone-archive.md (archive template)
   </execution_context>
 
 <context>

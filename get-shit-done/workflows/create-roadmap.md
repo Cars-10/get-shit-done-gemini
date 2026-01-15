@@ -10,9 +10,9 @@ requirements are orphaned and validates coverage before planning begins.
 <required_reading>
 **Read these files NOW:**
 
-1. ~/.claude/get-shit-done/templates/roadmap.md
-2. ~/.claude/get-shit-done/templates/state.md
-3. ~/.claude/get-shit-done/templates/requirements.md
+1. ~/.gemini/get-shit-done/templates/roadmap.md
+2. ~/.gemini/get-shit-done/templates/state.md
+3. ~/.gemini/get-shit-done/templates/requirements.md
 4. .planning/PROJECT.md
 5. .planning/REQUIREMENTS.md
 6. .planning/research/SUMMARY.md (if exists)
@@ -101,7 +101,7 @@ Continue without research context. Phase identification will rely on PROJECT.md 
 Scan for available domain expertise:
 
 ```bash
-ls ~/.claude/skills/expertise/ 2>/dev/null
+ls ~/.gemini/skills/expertise/ 2>/dev/null
 ```
 
 **Inference:** Based on the brief/user request, infer applicable domains:
@@ -114,7 +114,7 @@ ls ~/.claude/skills/expertise/ 2>/dev/null
 | "MIDI", "sequencer", "music app"         | expertise/midi           |
 | "ISF", "shader", "GLSL", "visual effect" | expertise/isf-shaders    |
 | "UI", "design", "frontend", "Tailwind"   | expertise/ui-design      |
-| "Agent SDK", "Claude SDK", "agentic"     | expertise/with-agent-sdk |
+| "Agent SDK", "Gemini SDK", "agentic"     | expertise/with-agent-sdk |
 
 **If domain inferred:**
 
@@ -304,7 +304,7 @@ Scan the brief and phase descriptions for research triggers:
 | "real-time", "websocket", "sync", "live updates"      | Architectural decision                  |
 | "deploy", "Vercel", "Railway", "hosting"              | If first deployment - config patterns   |
 | "choose between", "select", "evaluate", "which"       | Explicit decision needed                |
-| "AI", "OpenAI", "Claude", "LLM", "embeddings"         | Fast-moving APIs - need current docs    |
+| "AI", "OpenAI", "Gemini", "LLM", "embeddings"         | Fast-moving APIs - need current docs    |
 | Any technology not already in codebase                | New integration                         |
 | Explicit questions in brief                           | Unknowns flagged by user                |
 
@@ -419,7 +419,7 @@ mkdir -p .planning/phases
 </step>
 
 <step name="write_roadmap">
-Use template from `~/.claude/get-shit-done/templates/roadmap.md`.
+Use template from `~/.gemini/get-shit-done/templates/roadmap.md`.
 
 Initial roadmaps use integer phases (1, 2, 3...).
 Decimal phases added later via /gsd:insert-phase command (if it exists).
@@ -482,7 +482,7 @@ Write updated REQUIREMENTS.md.
 
 Create STATE.md — the project's living memory.
 
-Use template from `~/.claude/get-shit-done/templates/state.md`.
+Use template from `~/.gemini/get-shit-done/templates/state.md`.
 
 Write to `.planning/STATE.md`:
 
@@ -549,7 +549,7 @@ Resume file: None
 **Key points:**
 
 - Project Reference points to PROJECT.md for full context
-- Claude reads PROJECT.md directly for requirements, constraints, decisions
+- Gemini reads PROJECT.md directly for requirements, constraints, decisions
 - This file will be read first in every future operation
 - This file will be updated after every execution
 

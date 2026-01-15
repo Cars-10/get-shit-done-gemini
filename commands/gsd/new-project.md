@@ -20,10 +20,10 @@ Creates `.planning/` with PROJECT.md and config.json.
 
 <execution_context>
 
-@~/.claude/get-shit-done/references/principles.md
-@~/.claude/get-shit-done/references/questioning.md
-@~/.claude/get-shit-done/templates/project.md
-@~/.claude/get-shit-done/templates/config.json
+@~/.gemini/get-shit-done/references/principles.md
+@~/.gemini/get-shit-done/references/questioning.md
+@~/.gemini/get-shit-done/templates/project.md
+@~/.gemini/get-shit-done/templates/config.json
 
 </execution_context>
 
@@ -285,7 +285,7 @@ EOF
 
 <step name="done">
 
-Present completion with next steps (see ~/.claude/get-shit-done/references/continuation-format.md):
+Present completion with next steps (see ~/.gemini/get-shit-done/references/continuation-format.md):
 
 ```
 Project initialized:

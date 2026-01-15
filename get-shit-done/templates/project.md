@@ -179,6 +179,6 @@ See: .planning/PROJECT.md (updated [date])
 **Current focus:** [Current phase name]
 ```
 
-This ensures Claude reads current PROJECT.md context.
+This ensures Gemini reads current PROJECT.md context.
 
 </state_reference>

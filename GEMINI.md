@@ -1,6 +1,24 @@
 # Gemini CLI Configuration (GSD)
 
-This project uses the **Get Shit Done (GSD)** system for meta-prompting and context engineering.
+You can now simply ask me to "sync upstream files" or "update gemini config", and I will automatically execute the standardized conversion procedure.
+
+## Maintenance: Gemini Conversion Protocol
+
+This project maintains a conversion script to synchronize with upstream changes (originally from a Gemini-based repository) while enforcing Gemini branding and structure.
+
+**To run the conversion manually:**
+
+```bash
+node scripts/gemini-convert.js
+```
+
+This script automates:
+1.  **Renaming**: Updates `package.json`, `bin/install.js` and other core files to `get-shit-done-gemini`.
+2.  **Restructuring**: Moves `rules/` and `.toml` commands to the root for correct distribution.
+3.  **Branding**: Replaces "Gemini" references with "Gemini" across all documentation and templates.
+4.  **Path Correction**: Updates paths from `~/.claude` to `~/.gemini`.
+
+Use this whenever you pull updates from the upstream repository.
 
 ## Slash Command Support
 

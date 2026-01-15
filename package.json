@@ -1,9 +1,9 @@
 {
-  "name": "get-shit-done-cc",
+  "name": "get-shit-done-gemini",
   "version": "1.5.6",
-  "description": "A meta-prompting, context engineering and spec-driven development system for Claude Code by TÂCHES.",
+  "description": "A meta-prompting, context engineering and spec-driven development system for Gemini CLI by TÂCHES.",
   "bin": {
-    "get-shit-done-cc": "bin/install.js"
+    "get-shit-done-gemini": "bin/install.js"
   },
   "files": [
     "bin",
@@ -11,8 +11,8 @@
     "get-shit-done"
   ],
   "keywords": [
-    "claude",
-    "claude-code",
+    "gemini",
+    "gemini-cli",
     "ai",
     "meta-prompting",
     "context-engineering",

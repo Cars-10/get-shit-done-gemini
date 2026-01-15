@@ -1,20 +1,20 @@
 <purpose>
 Comprehensive research on HOW to implement a phase before planning.
 
-Triggered by /gsd:research-phase command when the domain is niche, complex, or Claude's training is likely stale.
+Triggered by /gsd:research-phase command when the domain is niche, complex, or Gemini's training is likely stale.
 
 Produces RESEARCH.md with ecosystem knowledge that informs quality planning - not just "which library" but "how do experts build this."
 </purpose>
 
 <when_to_use>
-**This workflow is for domains where Claude fails without research:**
+**This workflow is for domains where Gemini fails without research:**
 - 3D graphics (Three.js, Babylon.js, procedural generation, level design)
 - Game development (physics engines, collision, AI, ECS patterns)
 - Audio/music (Web Audio, DSP, synthesis, MIDI)
 - Shaders (GLSL, Metal, ISF, compute shaders)
 - ML/AI integration (model serving, inference, vector DBs)
 - Real-time systems (WebSockets, WebRTC, CRDT sync)
-- Specialized frameworks with active ecosystems Claude may not know
+- Specialized frameworks with active ecosystems Gemini may not know
 
 **Skip this for commodity domains:**
 - Standard auth (JWT, OAuth)
@@ -32,7 +32,7 @@ For niche domains, the question isn't library selection - it's:
 - What's the established architecture pattern?
 - What libraries form the standard stack?
 - What problems do people commonly hit?
-- What's SOTA vs what Claude thinks is SOTA?
+- What's SOTA vs what Gemini thinks is SOTA?
 - What should NOT be hand-rolled?
 </key_insight>
 
@@ -166,7 +166,7 @@ Categories to consider:
 
 **1. Core Technology:**
 - What's the primary technology/framework?
-- What version is current? (Claude's training may be stale)
+- What version is current? (Gemini's training may be stale)
 - What's the standard setup/toolchain?
 
 **2. Ecosystem/Stack:**
@@ -214,7 +214,7 @@ Execute research systematically for each domain identified.
 
 **CRITICAL: Source hierarchy - Context7 BEFORE WebSearch**
 
-Claude's training data is 6-18 months stale. Treat pre-existing knowledge as hypothesis, not fact.
+Gemini's training data is 6-18 months stale. Treat pre-existing knowledge as hypothesis, not fact.
 
 <research_protocol>
 
@@ -268,7 +268,7 @@ Execute research queries and document findings as you go:
 
 **Core Technology Findings:**
 - Current version: [from Context7]
-- Key changes since [Claude's training]: [from docs/WebSearch]
+- Key changes since [Gemini's training]: [from docs/WebSearch]
 - Setup approach: [verified pattern]
 
 **Ecosystem Stack:**
@@ -300,7 +300,7 @@ Execute research queries and document findings as you go:
 <step name="quality_check">
 Before creating RESEARCH.md, run through research-pitfalls.md checklist:
 
-**From ~/.claude/get-shit-done/references/research-pitfalls.md:**
+**From ~/.gemini/get-shit-done/references/research-pitfalls.md:**
 
 - [ ] All enumerated items investigated (not just some)
 - [ ] Negative claims verified with official docs
@@ -313,7 +313,7 @@ Before creating RESEARCH.md, run through research-pitfalls.md checklist:
 - [ ] "What might I have missed?" review completed
 
 **Additional checks for ecosystem research:**
-- [ ] Checked for libraries Claude might not know about
+- [ ] Checked for libraries Gemini might not know about
 - [ ] Verified version numbers are current
 - [ ] Confirmed patterns still recommended (not deprecated)
 - [ ] Looked for "don't do this" warnings in docs
@@ -328,7 +328,7 @@ Create RESEARCH.md using accumulated findings.
 **If phase directory doesn't exist:**
 Create it: `.planning/phases/${PHASE}-${SLUG}/`
 
-Use template from ~/.claude/get-shit-done/templates/research.md
+Use template from ~/.gemini/get-shit-done/templates/research.md
 
 Populate sections with verified findings from research execution.
 
@@ -449,7 +449,7 @@ When /gsd:plan-phase runs after research:
 6. "Architecture patterns" inform task structure
 7. "Code examples" can be referenced in task actions
 
-This produces higher quality plans because Claude knows:
+This produces higher quality plans because Gemini knows:
 - What tools experts use
 - What patterns to follow
 - What mistakes to avoid
