@@ -1,2 +1,196 @@
 description = "Plan fixes for UAT issues from verify-work"
-prompt = "<objective>\nCreate FIX.md plan from UAT issues found during verify-work.\n\nPurpose: Plan fixes for issues logged in phase-scoped ISSUES.md files.\nOutput: {plan}-FIX.md in the phase directory, ready for execution.\n</objective>\n\n<execution_context>\n@./.gemini/get-shit-done/references/plan-format.md\n@./.gemini/get-shit-done/references/checkpoints.md\n</execution_context>\n\n<context>\nPlan number: $ARGUMENTS (required - e.g., \"04-02\" or \"09-01\")\n\n**Load project state:**\n@.planning/STATE.md\n@.planning/ROADMAP.md\n</context>\n\n<process>\n\n<step name=\"parse\">\n**Parse plan argument:**\n\n$ARGUMENTS should be a plan number like \"04-02\" or \"09-01\".\nExtract phase number (XX) and plan number (NN).\n\nIf no argument provided:\n```\nError: Plan number required.\n\nUsage: /gsd:plan-fix 04-02\n\nThis creates a fix plan from .planning/phases/XX-name/04-02-ISSUES.md\n```\nExit.\n</step>\n\n<step name=\"find\">\n**Find ISSUES.md file:**\n\nSearch for matching ISSUES.md:\n```bash\nls .planning/phases/*/{plan}-ISSUES.md 2>/dev/null\n```\n\nIf not found:\n```\nNo ISSUES.md found for plan {plan}.\n\nISSUES.md files are created by /gsd:verify-work when UAT finds issues.\nIf no issues were found during testing, no fix plan is needed.\n```\nExit.\n</step>\n\n<step name=\"read\">\n**Read issues:**\n\nRead the ISSUES.md file.\nParse each issue:\n- ID (UAT-XXX)\n- Title\n- Severity (critical/major/minor)\n- Description/steps to reproduce\n- Acceptance criteria\n\nCount total issues by severity.\n</step>\n\n<step name=\"plan\">\n**Create fix tasks:**\n\nFor each issue (or logical group):\n- Create one task per issue OR\n- Group related minor issues into single task\n\nTask structure:\n```xml\n<task type=\"auto\">\n  <name>Fix UAT-001: [issue title]</name>\n  <files>[affected files from issue]</files>\n  <action>\n[What to fix based on issue description]\n[Reference original acceptance criteria]\n  </action>\n  <verify>[Test that issue is resolved]</verify>\n  <done>[Issue acceptance criteria met]</done>\n</task>\n```\n\nPrioritize: critical → major → minor\n</step>\n\n<step name=\"write\">\n**Write FIX.md:**\n\nCreate `.planning/phases/XX-name/{plan}-FIX.md`:\n\n```markdown\n---\nphase: XX-name\nplan: {plan}-FIX\ntype: fix\n---\n\n<objective>\nFix {N} UAT issues from plan {plan}.\n\nSource: {plan}-ISSUES.md\nPriority: {critical count} critical, {major count} major, {minor count} minor\n</objective>\n\n<execution_context>\n@./.gemini/get-shit-done/workflows/execute-plan.md\n@./.gemini/get-shit-done/templates/summary.md\n</execution_context>\n\n<context>\n@.planning/STATE.md\n@.planning/ROADMAP.md\n\n**Issues being fixed:**\n@.planning/phases/XX-name/{plan}-ISSUES.md\n\n**Original plan for reference:**\n@.planning/phases/XX-name/{plan}-PLAN.md\n</context>\n\n<tasks>\n[Generated fix tasks]\n</tasks>\n\n<verification>\nBefore declaring plan complete:\n- [ ] All critical issues fixed\n- [ ] All major issues fixed\n- [ ] Minor issues fixed or documented as deferred\n- [ ] Original acceptance criteria from issues met\n</verification>\n\n<success_criteria>\n- All UAT issues from {plan}-ISSUES.md addressed\n- Tests pass\n- Ready for re-verification\n</success_criteria>\n\n<output>\nAfter completion, create `.planning/phases/XX-name/{plan}-FIX-SUMMARY.md`\n</output>\n```\n</step>\n\n<step name=\"offer\">\n**Offer execution:**\n\n```\n---\n\n## ✓ Fix Plan Created\n\n**{plan}-FIX.md** — {N} issues to fix\n\n| Severity | Count |\n|----------|-------|\n| Critical | {n}   |\n| Major    | {n}   |\n| Minor    | {n}   |\n\n---\n\nWould you like to:\n1. Execute the fix plan now\n2. Review the plan first\n3. Modify the plan before executing\n\n---\n```\n\nUse Numbered List to get response.\nIf execute: `/gsd:execute-plan .planning/phases/XX-name/{plan}-FIX.md`\n</step>\n\n</process>\n\n<success_criteria>\n- [ ] ISSUES.md found and parsed\n- [ ] Fix tasks created for each issue\n- [ ] FIX.md written with proper structure\n- [ ] User offered to execute or review\n</success_criteria>"
+
+prompt = """
+<objective>
+Create FIX.md plan from UAT issues found during verify-work.
+
+Purpose: Plan fixes for issues logged in phase-scoped ISSUES.md files.
+Output: {plan}-FIX.md in the phase directory, ready for execution.
+</objective>
+
+<execution_context>
+@./.claude/get-shit-done/references/plan-format.md
+@./.claude/get-shit-done/references/checkpoints.md
+</execution_context>
+
+<context>
+Plan number: $ARGUMENTS (required - e.g., "04-02" or "09-01")
+
+**Load project state:**
+@.planning/STATE.md
+@.planning/ROADMAP.md
+</context>
+
+<process>
+
+<step name="parse">
+**Parse plan argument:**
+
+$ARGUMENTS should be a plan number like "04-02" or "09-01".
+Extract phase number (XX) and plan number (NN).
+
+If no argument provided:
+```
+Error: Plan number required.
+
+Usage: /gsd:plan-fix 04-02
+
+This creates a fix plan from .planning/phases/XX-name/04-02-ISSUES.md
+```
+Exit.
+</step>
+
+<step name="find">
+**Find ISSUES.md file:**
+
+Search for matching ISSUES.md:
+```bash
+ls .planning/phases/*/{plan}-ISSUES.md 2>/dev/null
+```
+
+If not found:
+```
+No ISSUES.md found for plan {plan}.
+
+ISSUES.md files are created by /gsd:verify-work when UAT finds issues.
+If no issues were found during testing, no fix plan is needed.
+```
+Exit.
+</step>
+
+<step name="read">
+**Read issues:**
+
+Read the ISSUES.md file.
+Parse each issue:
+- ID (UAT-XXX)
+- Title
+- Severity (critical/major/minor)
+- Description/steps to reproduce
+- Acceptance criteria
+
+Count total issues by severity.
+</step>
+
+<step name="plan">
+**Create fix tasks:**
+
+For each issue (or logical group):
+- Create one task per issue OR
+- Group related minor issues into single task
+
+Task structure:
+```xml
+<task type="auto">
+  <name>Fix UAT-001: [issue title]</name>
+  <files>[affected files from issue]</files>
+  <action>
+[What to fix based on issue description]
+[Reference original acceptance criteria]
+  </action>
+  <verify>[Test that issue is resolved]</verify>
+  <done>[Issue acceptance criteria met]</done>
+</task>
+```
+
+Prioritize: critical → major → minor
+</step>
+
+<step name="write">
+**Write FIX.md:**
+
+Create `.planning/phases/XX-name/{plan}-FIX.md`:
+
+```markdown
+---
+phase: XX-name
+plan: {plan}-FIX
+type: fix
+---
+
+<objective>
+Fix {N} UAT issues from plan {plan}.
+
+Source: {plan}-ISSUES.md
+Priority: {critical count} critical, {major count} major, {minor count} minor
+</objective>
+
+<execution_context>
+@./.claude/get-shit-done/workflows/execute-plan.md
+@./.claude/get-shit-done/templates/summary.md
+</execution_context>
+
+<context>
+@.planning/STATE.md
+@.planning/ROADMAP.md
+
+**Issues being fixed:**
+@.planning/phases/XX-name/{plan}-ISSUES.md
+
+**Original plan for reference:**
+@.planning/phases/XX-name/{plan}-PLAN.md
+</context>
+
+<tasks>
+[Generated fix tasks]
+</tasks>
+
+<verification>
+Before declaring plan complete:
+- [ ] All critical issues fixed
+- [ ] All major issues fixed
+- [ ] Minor issues fixed or documented as deferred
+- [ ] Original acceptance criteria from issues met
+</verification>
+
+<success_criteria>
+- All UAT issues from {plan}-ISSUES.md addressed
+- Tests pass
+- Ready for re-verification
+</success_criteria>
+
+<output>
+After completion, create `.planning/phases/XX-name/{plan}-FIX-SUMMARY.md`
+</output>
+```
+</step>
+
+<step name="offer">
+**Offer execution:**
+
+```
+---
+
+## ✓ Fix Plan Created
+
+**{plan}-FIX.md** — {N} issues to fix
+
+| Severity | Count |
+|----------|-------|
+| Critical | {n}   |
+| Major    | {n}   |
+| Minor    | {n}   |
+
+---
+
+Would you like to:
+1. Execute the fix plan now
+2. Review the plan first
+3. Modify the plan before executing
+
+---
+```
+
+Use AskUserQuestion to get response.
+If execute: `/gsd:execute-plan .planning/phases/XX-name/{plan}-FIX.md`
+</step>
+
+</process>
+
+<success_criteria>
+- [ ] ISSUES.md found and parsed
+- [ ] Fix tasks created for each issue
+- [ ] FIX.md written with proper structure
+- [ ] User offered to execute or review
+</success_criteria>
+"""

@@ -1,2 +1,175 @@
 description = "Capture idea or task as todo from current conversation context"
-prompt = "<objective>\nCapture an idea, task, or issue that surfaces during a GSD session as a structured todo for later work.\n\nEnables \"thought → capture → continue\" flow without losing context or derailing current work.\n</objective>\n\n<context>\n@.planning/STATE.md\n</context>\n\n<process>\n\n<step name=\"ensure_directory\">\n```bash\nmkdir -p .planning/todos/pending .planning/todos/done\n```\n</step>\n\n<step name=\"check_existing_areas\">\n```bash\nls .planning/todos/pending/*.md 2>/dev/null | xargs -I {} grep \"^area:\" {} 2>/dev/null | cut -d' ' -f2 | sort -u\n```\n\nNote existing areas for consistency in infer_area step.\n</step>\n\n<step name=\"extract_content\">\n**With arguments:** Use as the title/focus.\n- `/gsd:add-todo Add auth token refresh` → title = \"Add auth token refresh\"\n\n**Without arguments:** Analyze recent conversation to extract:\n- The specific problem, idea, or task discussed\n- Relevant file paths mentioned\n- Technical details (error messages, line numbers, constraints)\n\nFormulate:\n- `title`: 3-10 word descriptive title (action verb preferred)\n- `problem`: What's wrong or why this is needed\n- `solution`: Approach hints or \"TBD\" if just an idea\n- `files`: Relevant paths with line numbers from conversation\n</step>\n\n<step name=\"infer_area\">\nInfer area from file paths:\n\n| Path pattern | Area |\n|--------------|------|\n| `src/api/*`, `api/*` | `api` |\n| `src/components/*`, `src/ui/*` | `ui` |\n| `src/auth/*`, `auth/*` | `auth` |\n| `src/db/*`, `database/*` | `database` |\n| `tests/*`, `__tests__/*` | `testing` |\n| `docs/*` | `docs` |\n| `.planning/*` | `planning` |\n| `scripts/*`, `bin/*` | `tooling` |\n| No files or unclear | `general` |\n\nUse existing area from step 2 if similar match exists.\n</step>\n\n<step name=\"check_duplicates\">\n```bash\ngrep -l -i \"[key words from title]\" .planning/todos/pending/*.md 2>/dev/null\n```\n\nIf potential duplicate found:\n1. Read the existing todo\n2. Compare scope\n\nIf overlapping, use Numbered List:\n- header: \"Duplicate?\"\n- question: \"Similar todo exists: [title]. What would you like to do?\"\n- options:\n  - \"Skip\" — keep existing todo\n  - \"Replace\" — update existing with new context\n  - \"Add anyway\" — create as separate todo\n</step>\n\n<step name=\"create_file\">\n```bash\ntimestamp=$(date \"+%Y-%m-%dT%H:%M\")\ndate_prefix=$(date \"+%Y-%m-%d\")\n```\n\nGenerate slug from title (lowercase, hyphens, no special chars).\n\nWrite to `.planning/todos/pending/${date_prefix}-${slug}.md`:\n\n```markdown\n---\ncreated: [timestamp]\ntitle: [title]\narea: [area]\nfiles:\n  - [file:lines]\n---\n\n## Problem\n\n[problem description - enough context for future Gemini to understand weeks later]\n\n## Solution\n\n[approach hints or \"TBD\"]\n```\n</step>\n\n<step name=\"update_state\">\nIf `.planning/STATE.md` exists:\n\n1. Count todos: `ls .planning/todos/pending/*.md 2>/dev/null | wc -l`\n2. Update \"### Pending Todos\" under \"## Accumulated Context\"\n</step>\n\n<step name=\"git_commit\">\nCommit the todo and any updated state:\n\n```bash\ngit add .planning/todos/pending/[filename]\n[ -f .planning/STATE.md ] && git add .planning/STATE.md\ngit commit -m \"$(cat <<'EOF'\ndocs: capture todo - [title]\n\nArea: [area]\nEOF\n)\"\n```\n\nConfirm: \"Committed: docs: capture todo - [title]\"\n</step>\n\n<step name=\"confirm\">\n```\nTodo saved: .planning/todos/pending/[filename]\n\n  [title]\n  Area: [area]\n  Files: [count] referenced\n\n---\n\nWould you like to:\n\n1. Continue with current work\n2. Add another todo\n3. View all todos (/gsd:check-todos)\n```\n</step>\n\n</process>\n\n<output>\n- `.planning/todos/pending/[date]-[slug].md`\n- Updated `.planning/STATE.md` (if exists)\n</output>\n\n<anti_patterns>\n- Don't create todos for work in current plan (that's deviation rule territory)\n- Don't create elaborate solution sections — captures ideas, not plans\n- Don't block on missing information — \"TBD\" is fine\n</anti_patterns>\n\n<success_criteria>\n- [ ] Directory structure exists\n- [ ] Todo file created with valid frontmatter\n- [ ] Problem section has enough context for future Gemini\n- [ ] No duplicates (checked and resolved)\n- [ ] Area consistent with existing todos\n- [ ] STATE.md updated if exists\n- [ ] Todo and state committed to git\n</success_criteria>"
+
+prompt = """
+<objective>
+Capture an idea, task, or issue that surfaces during a GSD session as a structured todo for later work.
+
+Enables "thought → capture → continue" flow without losing context or derailing current work.
+</objective>
+
+<context>
+@.planning/STATE.md
+</context>
+
+<process>
+
+<step name="ensure_directory">
+```bash
+mkdir -p .planning/todos/pending .planning/todos/done
+```
+</step>
+
+<step name="check_existing_areas">
+```bash
+ls .planning/todos/pending/*.md 2>/dev/null | xargs -I {} grep "^area:" {} 2>/dev/null | cut -d' ' -f2 | sort -u
+```
+
+Note existing areas for consistency in infer_area step.
+</step>
+
+<step name="extract_content">
+**With arguments:** Use as the title/focus.
+- `/gsd:add-todo Add auth token refresh` → title = "Add auth token refresh"
+
+**Without arguments:** Analyze recent conversation to extract:
+- The specific problem, idea, or task discussed
+- Relevant file paths mentioned
+- Technical details (error messages, line numbers, constraints)
+
+Formulate:
+- `title`: 3-10 word descriptive title (action verb preferred)
+- `problem`: What's wrong or why this is needed
+- `solution`: Approach hints or "TBD" if just an idea
+- `files`: Relevant paths with line numbers from conversation
+</step>
+
+<step name="infer_area">
+Infer area from file paths:
+
+| Path pattern | Area |
+|--------------|------|
+| `src/api/*`, `api/*` | `api` |
+| `src/components/*`, `src/ui/*` | `ui` |
+| `src/auth/*`, `auth/*` | `auth` |
+| `src/db/*`, `database/*` | `database` |
+| `tests/*`, `__tests__/*` | `testing` |
+| `docs/*` | `docs` |
+| `.planning/*` | `planning` |
+| `scripts/*`, `bin/*` | `tooling` |
+| No files or unclear | `general` |
+
+Use existing area from step 2 if similar match exists.
+</step>
+
+<step name="check_duplicates">
+```bash
+grep -l -i "[key words from title]" .planning/todos/pending/*.md 2>/dev/null
+```
+
+If potential duplicate found:
+1. Read the existing todo
+2. Compare scope
+
+If overlapping, use AskUserQuestion:
+- header: "Duplicate?"
+- question: "Similar todo exists: [title]. What would you like to do?"
+- options:
+  - "Skip" — keep existing todo
+  - "Replace" — update existing with new context
+  - "Add anyway" — create as separate todo
+</step>
+
+<step name="create_file">
+```bash
+timestamp=$(date "+%Y-%m-%dT%H:%M")
+date_prefix=$(date "+%Y-%m-%d")
+```
+
+Generate slug from title (lowercase, hyphens, no special chars).
+
+Write to `.planning/todos/pending/${date_prefix}-${slug}.md`:
+
+```markdown
+---
+created: [timestamp]
+title: [title]
+area: [area]
+files:
+  - [file:lines]
+---
+
+## Problem
+
+[problem description - enough context for future Claude to understand weeks later]
+
+## Solution
+
+[approach hints or "TBD"]
+```
+</step>
+
+<step name="update_state">
+If `.planning/STATE.md` exists:
+
+1. Count todos: `ls .planning/todos/pending/*.md 2>/dev/null | wc -l`
+2. Update "### Pending Todos" under "## Accumulated Context"
+</step>
+
+<step name="git_commit">
+Commit the todo and any updated state:
+
+```bash
+git add .planning/todos/pending/[filename]
+[ -f .planning/STATE.md ] && git add .planning/STATE.md
+git commit -m "$(cat <<'EOF'
+docs: capture todo - [title]
+
+Area: [area]
+EOF
+)"
+```
+
+Confirm: "Committed: docs: capture todo - [title]"
+</step>
+
+<step name="confirm">
+```
+Todo saved: .planning/todos/pending/[filename]
+
+  [title]
+  Area: [area]
+  Files: [count] referenced
+
+---
+
+Would you like to:
+
+1. Continue with current work
+2. Add another todo
+3. View all todos (/gsd:check-todos)
+```
+</step>
+
+</process>
+
+<output>
+- `.planning/todos/pending/[date]-[slug].md`
+- Updated `.planning/STATE.md` (if exists)
+</output>
+
+<anti_patterns>
+- Don't create todos for work in current plan (that's deviation rule territory)
+- Don't create elaborate solution sections — captures ideas, not plans
+- Don't block on missing information — "TBD" is fine
+</anti_patterns>
+
+<success_criteria>
+- [ ] Directory structure exists
+- [ ] Todo file created with valid frontmatter
+- [ ] Problem section has enough context for future Claude
+- [ ] No duplicates (checked and resolved)
+- [ ] Area consistent with existing todos
+- [ ] STATE.md updated if exists
+- [ ] Todo and state committed to git
+</success_criteria>
+"""

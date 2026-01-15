@@ -1,2 +1,43 @@
-description = "Surface Gemini's assumptions about a phase approach before planning"
-prompt = "<objective>\nAnalyze a phase and present Gemini's assumptions about technical approach, implementation order, scope boundaries, risk areas, and dependencies.\n\nPurpose: Help users see what Gemini thinks BEFORE planning begins - enabling course correction early when assumptions are wrong.\nOutput: Conversational output only (no file creation) - ends with \"What do you think?\" prompt\n</objective>\n\n<execution_context>\n@./.gemini/get-shit-done/workflows/list-phase-assumptions.md\n</execution_context>\n\n<context>\nPhase number: $ARGUMENTS (required)\n\n**Load project state first:**\n@.planning/STATE.md\n\n**Load roadmap:**\n@.planning/ROADMAP.md\n</context>\n\n<process>\n1. Validate phase number argument (error if missing or invalid)\n2. Check if phase exists in roadmap\n3. Follow list-phase-assumptions.md workflow:\n   - Analyze roadmap description\n   - Surface assumptions about: technical approach, implementation order, scope, risks, dependencies\n   - Present assumptions clearly\n   - Prompt \"What do you think?\"\n4. Gather feedback and offer next steps\n</process>\n\n<success_criteria>\n\n- Phase validated against roadmap\n- Assumptions surfaced across five areas\n- User prompted for feedback\n- User knows next steps (discuss context, plan phase, or correct assumptions)\n  </success_criteria>"
+description = "Surface Claude's assumptions about a phase approach before planning"
+
+prompt = """
+<objective>
+Analyze a phase and present Claude's assumptions about technical approach, implementation order, scope boundaries, risk areas, and dependencies.
+
+Purpose: Help users see what Claude thinks BEFORE planning begins - enabling course correction early when assumptions are wrong.
+Output: Conversational output only (no file creation) - ends with "What do you think?" prompt
+</objective>
+
+<execution_context>
+@./.claude/get-shit-done/workflows/list-phase-assumptions.md
+</execution_context>
+
+<context>
+Phase number: $ARGUMENTS (required)
+
+**Load project state first:**
+@.planning/STATE.md
+
+**Load roadmap:**
+@.planning/ROADMAP.md
+</context>
+
+<process>
+1. Validate phase number argument (error if missing or invalid)
+2. Check if phase exists in roadmap
+3. Follow list-phase-assumptions.md workflow:
+   - Analyze roadmap description
+   - Surface assumptions about: technical approach, implementation order, scope, risks, dependencies
+   - Present assumptions clearly
+   - Prompt "What do you think?"
+4. Gather feedback and offer next steps
+</process>
+
+<success_criteria>
+
+- Phase validated against roadmap
+- Assumptions surfaced across five areas
+- User prompted for feedback
+- User knows next steps (discuss context, plan phase, or correct assumptions)
+  </success_criteria>
+"""
