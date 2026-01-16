@@ -1,6 +1,7 @@
 ---
 name: gsd:research-project
 description: Research domain ecosystem before creating roadmap
+argument-hint: ""
 allowed-tools:
   - Read
   - Write
