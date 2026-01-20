@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Codebase Intelligence - PostToolUse Indexing Hook
-// Indexes file exports/imports when Claude writes or edits JS/TS files
+// Indexes file exports/imports when Gemini writes or edits JS/TS files
 // Also handles entity files for semantic codebase understanding
 
 /**
@@ -642,8 +642,8 @@ function signatureChanged(prevEntry, exports, imports) {
 }
 
 /**
- * Generate semantic entity file using Claude
- * Spawns `claude -p` to analyze file and generate entity markdown
+ * Generate semantic entity file using Gemini
+ * Spawns .gemini -p` to analyze file and generate entity markdown
  *
  * @param {string} filePath - Path to the code file
  * @param {string} content - File content
@@ -663,7 +663,7 @@ async function generateEntity(filePath, content, exports, imports) {
   const entityPath = path.join(entitiesDir, `${slug}.md`);
   const today = new Date().toISOString().split('T')[0];
 
-  // Build prompt for Claude
+  // Build prompt for Gemini
   const prompt = `Analyze this code file and generate ONLY the entity markdown (no explanation, no code fences).
 
 Path: ${filePath}
@@ -705,8 +705,8 @@ TBD
 [Optional: any important patterns or gotchas, or remove this section]`;
 
   try {
-    // Spawn claude -p with timeout
-    const cmd = `claude -p "${prompt.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`;
+    // Spawn.gemini -p with timeout
+    const cmd = .gemini -p "${prompt.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`;
     const result = execSync(cmd, {
       encoding: 'utf8',
       timeout: 30000, // 30 second timeout
@@ -847,7 +847,7 @@ async function syncEntityToGraph(entityPath) {
     persistDatabase(db, dbPath);
     db.close();
   } catch (e) {
-    // Silent failure - never block Claude
+    // Silent failure - never block Gemini
     // Graph sync is best-effort enhancement
   }
 }
@@ -1211,7 +1211,7 @@ process.stdin.on('end', () => {
 
     process.exit(0);
   } catch (error) {
-    // Silent failure - never block Claude
+    // Silent failure - never block Gemini
     process.exit(0);
   }
 });

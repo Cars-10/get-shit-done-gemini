@@ -4,7 +4,7 @@
 
 See: .planning/PROJECT.md (updated 2026-01-19)
 
-**Core value:** Claude understands your codebase structure and conventions before it starts working — automatically
+**Core value:** Gemini understands your codebase structure and conventions before it starts working — automatically
 **Current focus:** v1.9.0 Codebase Intelligence System
 
 ## Current Position

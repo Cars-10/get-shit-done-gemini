@@ -9,7 +9,7 @@ The most mind-blowing approach combines **semantic code indexing** (tree-sitter 
 ## Requirements
 
 - Zero external services (local-first, works offline)
-- Sub-second queries (can't slow down Claude's planning/execution)
+- Sub-second queries (can't slow down Gemini's planning/execution)
 - Adaptive learning (improves from corrections without manual intervention)
 - Works across language ecosystems (not just TypeScript)
 - Integrates seamlessly with existing GSD workflow
@@ -97,8 +97,8 @@ Understanding what code DOES, not just what it IS:
 
 ### Layer 3: Adaptive Learning (The Magic)
 The system improves from every interaction:
-- When Claude deviates from conventions and you correct it → system learns
-- When Claude asks "should this be a service or util?" and you answer → system remembers
+- When Gemini deviates from conventions and you correct it → system learns
+- When Gemini asks "should this be a service or util?" and you answer → system remembers
 - Confidence scores that increase with consistent patterns, decrease with exceptions
 
 **Architecture:**
@@ -150,7 +150,7 @@ npm install voyageai  # or call API directly
    - Confidence scores: 15 examples = high confidence, 2 examples = tentative
 
 2. **Deviation Detection During Execution**
-   - Before Claude writes `src/utils/auth.ts`, check conventions
+   - Before Gemini writes `src/utils/auth.ts`, check conventions
    - "This looks like a service (has `@Injectable`, depends on repository). Convention suggests `src/services/auth.service.ts`"
    - NOT blocking—advisory with reasoning
 
@@ -160,7 +160,7 @@ npm install voyageai  # or call API directly
    - Future similar cases consider this exception
 
 4. **Semantic "Why" Queries**
-   - Claude can ask the index: "Why is UserRepository in `src/data` not `src/repositories`?"
+   - Gemini can ask the index: "Why is UserRepository in `src/data` not `src/repositories`?"
    - Index returns: historical context, similar patterns, any recorded exceptions
 
 5. **Auto-Refresh with Minimal Recomputation**
@@ -190,10 +190,10 @@ npm install voyageai  # or call API directly
 
 ## Approach 4: MCP Server Integration (Leverage Existing Tools)
 
-**How it works:** Use existing code-index-mcp or claude-context MCP servers, integrate with GSD's planning/execution.
+**How it works:** Use existing code-index-mcp or.gemini-context MCP servers, integrate with GSD's planning/execution.
 
 **Libraries/tools:**
-- `code-index-mcp` or `claude-context` MCP server
+- `code-index-mcp` or .gemini-context` MCP server
 - GSD adds MCP configuration to project setup
 - Planner/executor query MCP tools instead of custom indices
 
@@ -201,7 +201,7 @@ npm install voyageai  # or call API directly
 - Leverage battle-tested implementations
 - Active community development
 - Already handles tree-sitter, embeddings, incremental updates
-- MCP is Claude Code native
+- MCP is Gemini CLI native
 
 **Cons:**
 - Less control over index structure
@@ -255,7 +255,7 @@ npm install voyageai  # or call API directly
 
 ## Implementation Context
 
-<claude_context>
+.gemini_context>
 <chosen_approach>
 - name: Self-Evolving Codebase Intelligence (phased)
 - libraries:
@@ -337,7 +337,7 @@ npm install voyageai  # or call API directly
   - FeedbackCollector: Simulate corrections, verify confidence updates
   - Integration: Full flow from code change → query → recommendation
 </implementation>
-</claude_context>
+<.gemini_context>
 
 **Next Action:** Start with Phase 1 - build the tree-sitter StructureExtractor that outputs `symbols.json` for a test project. This proves the parsing pipeline works before adding embeddings.
 
@@ -348,7 +348,7 @@ npm install voyageai  # or call API directly
 - [Semantic Code Indexing with AST and Tree-sitter](https://medium.com/@email2dineshkuppan/semantic-code-indexing-with-ast-and-tree-sitter-for-ai-agents-part-1-of-3-eb5237ba687a) - Tree-sitter fundamentals
 - [mcp-server-tree-sitter](https://github.com/wrale/mcp-server-tree-sitter) - Reference implementation
 - [code-index-mcp](https://github.com/johnhuang316/code-index-mcp) - 7-language tree-sitter integration
-- [claude-context (Zilliz)](https://github.com/zilliztech/claude-context) - 40% token reduction with semantic search
+- .gemini-context (Zilliz)](https://github.com/zilliztech.gemini-context) - 40% token reduction with semantic search
 - [voyage-code-3 announcement](https://blog.voyageai.com/2024/12/04/voyage-code-3/) - State-of-art code embeddings
 - [sqlite-vec](https://github.com/asg017/sqlite-vec) - Local vector search for SQLite
 - [Hybrid search with sqlite-vec](https://alexgarcia.xyz/blog/2024/sqlite-vec-hybrid-search/index.html) - FTS5 + vector combination

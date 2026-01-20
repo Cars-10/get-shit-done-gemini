@@ -372,7 +372,7 @@ Update GSD to latest version with changelog preview.
 
 - Shows what changed before updating
 - Confirms before running install
-- Better than raw `npx get-shit-done-cc`
+- Better than raw `npx get-shit-done-gemini`
 
 Usage: `/gsd:update`
 

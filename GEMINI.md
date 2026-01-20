@@ -18,7 +18,7 @@ This script automates:
 1.  **Renaming**: Updates `package.json`, `bin/install.js` and other core files to `get-shit-done-gemini`.
 2.  **Restructuring**: Moves `rules/` and `.toml` commands to the root for correct distribution.
 3.  **Branding**: Replaces "Gemini" references with "Gemini" across all documentation and templates.
-4.  **Tag Cleanup**: Removes `<sub>` tags used for status indicators to keep the CLI output clean.
+4.  **Tag Cleanup**: Removes `` tags used for status indicators to keep the CLI output clean.
 5.  **Path Correction**: Updates paths from `~/.gemini` to `~/.gemini`.
 6.  **Feature Stripping**: Removes unsupported features like `hooks/` and `settings.json` integration to ensure a clean Gemini CLI experience.
 

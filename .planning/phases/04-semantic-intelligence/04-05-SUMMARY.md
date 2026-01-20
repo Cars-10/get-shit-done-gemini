@@ -94,7 +94,7 @@ When a project has been indexed via `/gsd:scan-codebase` or through hook trigger
 - Module type breakdown (utils, APIs, components, etc.)
 - Total relationship count
 
-This closes the Phase 4 objective: Claude understands codebase structure and conventions before it starts working.
+This closes the Phase 4 objective: Gemini understands codebase structure and conventions before it starts working.
 
 ---
 *Phase: 04-semantic-intelligence*

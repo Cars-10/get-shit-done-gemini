@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Codebase Intelligence - SessionStart Context Injection Hook
-// Reads pre-generated summary.md and injects into Claude's context
+// Reads pre-generated summary.md and injects into Gemini's context
 
 const fs = require('fs');
 const path = require('path');
@@ -33,7 +33,7 @@ process.stdin.on('end', () => {
 
     process.exit(0);
   } catch (error) {
-    // Silent failure - never block Claude
+    // Silent failure - never block Gemini
     process.exit(0);
   }
 });

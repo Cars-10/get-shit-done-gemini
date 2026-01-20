@@ -2,9 +2,9 @@
 
 ## Vision
 
-A living, breathing knowledge system that learns your codebase patterns as you build, provides real-time advisory during execution, and injects accumulated wisdom into every Claude session—without API calls, without manual maintenance, without going stale.
+A living, breathing knowledge system that learns your codebase patterns as you build, provides real-time advisory during execution, and injects accumulated wisdom into every Gemini session—without API calls, without manual maintenance, without going stale.
 
-**The experience:** By session 5, Claude knows where services go, what naming conventions you use, and what patterns have emerged—because it learned from watching you build.
+**The experience:** By session 5, Gemini knows where services go, what naming conventions you use, and what patterns have emerged—because it learned from watching you build.
 
 ---
 
@@ -33,7 +33,7 @@ The existing GSD approach to codebase understanding has fundamental limitations:
 | Issue | Impact |
 |-------|--------|
 | **Point-in-time snapshots** | 7 markdown docs generated once, immediately stale |
-| **Human-readable but not machine-actionable** | Claude re-parses prose every time |
+| **Human-readable but not machine-actionable** | Gemini re-parses prose every time |
 | **Passive consumption** | Docs sit idle; planners/executors may not load them |
 | **No feedback loop** | Learnings during execution don't flow back |
 | **Heavy upfront cost** | 4 parallel agents do deep analysis before any code exists |
@@ -65,7 +65,7 @@ For greenfield projects (primary GSD use case), there's nothing to map at start.
 ```
 Phase 1: Creates src/services/user.service.ts
 Phase 2: Creates src/services/auth.service.ts
-Phase 3: Claude should KNOW "services go in src/services/*.service.ts"
+Phase 3: Gemini should KNOW "services go in src/services/*.service.ts"
 ```
 
 ### 2. Zero API Calls for Core Functionality
@@ -83,9 +83,9 @@ Core operations use only:
 
 ### 3. Hooks as Infrastructure
 
-Claude Code's hook system provides the integration points:
-- **PostToolUse**: Observe what Claude writes
-- **PreToolUse**: Advise before Claude writes
+Gemini CLI's hook system provides the integration points:
+- **PostToolUse**: Observe what Gemini writes
+- **PreToolUse**: Advise before Gemini writes
 - **SessionStart**: Inject accumulated knowledge
 
 No custom tooling required—leverage existing infrastructure.
@@ -94,7 +94,7 @@ No custom tooling required—leverage existing infrastructure.
 
 Following GSD philosophy ("no checkpoints for automatable work"), convention checks are advisory:
 - Show the deviation
-- Let Claude proceed
+- Let Gemini proceed
 - Record the decision
 - Learn from exceptions
 
@@ -120,7 +120,7 @@ Optimize for projects starting from scratch. Support existing codebases through 
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                          │
 │  ┌────────────────┐                           ┌────────────────────┐    │
-│  │    Claude      │                           │    intel-index.js  │    │
+│  │    Gemini      │                           │    intel-index.js  │    │
 │  │    Session     │                           │    (PostToolUse)   │    │
 │  │                │                           │                    │    │
 │  │  Write tool ───┼─── PostToolUse hook ────► │  • Parse AST       │    │
@@ -156,7 +156,7 @@ Optimize for projects starting from scratch. Support existing codebases through 
 │          │                                              ▲               │
 │          │                                              │               │
 │  ┌───────┴────────┐                           ┌────────┴───────────┐   │
-│  │    Claude      │                           │  intel-advise.js   │   │
+│  │    Gemini      │                           │  intel-advise.js   │   │
 │  │    Session     │                           │   (PreToolUse)     │   │
 │  │                │                           │                    │   │
 │  │  Write tool ◄──┼─── PreToolUse hook ────── │  • Check path      │   │
@@ -230,11 +230,11 @@ Three hooks work together to create the intelligence loop:
 7. Update `conventions.json` if new patterns found
 8. Regenerate `summary.md`
 
-**Performance:** Async, non-blocking. Can take 100-500ms without affecting Claude.
+**Performance:** Async, non-blocking. Can take 100-500ms without affecting Gemini.
 
 ```javascript
 #!/usr/bin/env node
-// ~/.claude/hooks/intel-index.js
+// ~/.gemini/hooks/intel-index.js
 
 const fs = require('fs');
 const path = require('path');
@@ -262,7 +262,7 @@ process.stdin.on('end', async () => {
   try {
     await processHookEvent(JSON.parse(input));
   } catch (err) {
-    // Silent failure - never break Claude's workflow
+    // Silent failure - never break Gemini's workflow
     if (process.env.INTEL_DEBUG) {
       console.error('Intel indexer error:', err.message);
     }
@@ -835,7 +835,7 @@ function saveJSON(filePath, data) {
 
 ```javascript
 #!/usr/bin/env node
-// ~/.claude/hooks/intel-advise.js
+// ~/.gemini/hooks/intel-advise.js
 
 const fs = require('fs');
 const path = require('path');
@@ -1003,7 +1003,7 @@ function findProjectRoot(filePath) {
 
 ### Hook 3: intel-init.js (SessionStart)
 
-**Trigger:** When a Claude Code session starts
+**Trigger:** When a Gemini CLI session starts
 
 **Purpose:** Inject codebase intelligence into session context
 
@@ -1011,13 +1011,13 @@ function findProjectRoot(filePath) {
 1. Find project root from cwd
 2. Read `summary.md`
 3. Output wrapped in `<codebase-intelligence>` tags
-4. Claude sees this in system context
+4. Gemini sees this in system context
 
 **Performance:** Sync, should complete in <500ms. Simple file read.
 
 ```javascript
 #!/usr/bin/env node
-// ~/.claude/hooks/intel-init.js
+// ~/.gemini/hooks/intel-init.js
 
 const fs = require('fs');
 const path = require('path');
@@ -1046,7 +1046,7 @@ try {
     process.exit(0);
   }
 
-  // Output to Claude's context
+  // Output to Gemini's context
   console.log(`<codebase-intelligence>
 ${summary}
 </codebase-intelligence>`);
@@ -1193,7 +1193,7 @@ Detected patterns with confidence scores and learning history.
 
 ### summary.md (Auto-generated)
 
-Human-readable summary injected into Claude's context.
+Human-readable summary injected into Gemini's context.
 
 ```markdown
 # Codebase Intelligence Summary
@@ -1332,7 +1332,7 @@ Adjustments:
 │       │                            │      │                      │
 │       │                     Show message  └──► Proceed           │
 │       │                            │                             │
-│       │                     Claude decides                       │
+│       │                     Gemini decides                       │
 │       │                     │           │                        │
 │       │                  Adjust      Proceed                     │
 │       │                    path      anyway                      │
@@ -1350,7 +1350,7 @@ Adjustments:
 When a file deviates from a convention:
 
 1. **PreToolUse shows advisory**
-2. **Claude proceeds anyway**
+2. **Gemini proceeds anyway**
 3. **PostToolUse records the file**
 4. **If pattern persists** (same deviation 2+ times):
    - Option A: Lower rule confidence
@@ -1376,7 +1376,7 @@ Day 5: notification.service.ts created
 
 Day 7: crypto.ts created in services/ (deviation)
        → Advisory shown
-       → Claude proceeds
+       → Gemini proceeds
        → Exception recorded
        → Confidence: 0.605 (5/6 files match)
 
@@ -1423,7 +1423,7 @@ Day 8: utils.ts created in services/ (another deviation)
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.claude/hooks/intel-index.js",
+            "command": "node ~/.gemini/hooks/intel-index.js",
             "timeout": 5000
           }
         ]
@@ -1435,7 +1435,7 @@ Day 8: utils.ts created in services/ (another deviation)
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.claude/hooks/intel-advise.js",
+            "command": "node ~/.gemini/hooks/intel-advise.js",
             "timeout": 1000
           }
         ]
@@ -1446,7 +1446,7 @@ Day 8: utils.ts created in services/ (another deviation)
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.claude/hooks/intel-init.js",
+            "command": "node ~/.gemini/hooks/intel-init.js",
             "timeout": 2000
           }
         ]
@@ -1483,7 +1483,7 @@ You: /gsd:new-project
 ...creates empty .planning/intel/ structure...
 
 You: /gsd:execute-phase 1
-...Claude creates files...
+...Gemini creates files...
 
 PostToolUse (silent):
   → Indexes src/services/user.service.ts
@@ -1504,7 +1504,7 @@ SessionStart:
   → intel-init finds no summary yet (too sparse)
   → Nothing injected
 
-...Claude creates more files...
+...Gemini creates more files...
 
 PostToolUse (silent):
   → Indexes src/services/email.service.ts
@@ -1524,7 +1524,7 @@ You: /gsd:execute-phase 3
 
 SessionStart:
   → intel-init reads summary.md
-  → Injects into Claude's context:
+  → Injects into Gemini's context:
 
 <codebase-intelligence>
 # Codebase Intelligence Summary
@@ -1538,11 +1538,11 @@ SessionStart:
 ...
 </codebase-intelligence>
 
-Claude (planning):
+Gemini (planning):
 "I need to create a payment service. Based on codebase conventions,
 I'll create src/services/payment.service.ts"
 
-...Claude creates file...
+...Gemini creates file...
 
 PostToolUse:
   → Indexes payment.service.ts
@@ -1552,18 +1552,18 @@ PostToolUse:
 ### Session 5 (Deviation Scenario)
 
 ```
-Claude about to write: src/services/crypto.ts
+Gemini about to write: src/services/crypto.ts
 
 PreToolUse:
   → Checks: crypto.ts doesn't match *.service.ts
   → Returns advisory
 
-Claude sees:
+Gemini sees:
 "📍 Convention advisory: Files in 'src/services/' typically match
 '*.service.ts' (5 files, 78% confidence). 'crypto.ts' doesn't match.
 Proceeding—this will be noted if intentional."
 
-Claude: "I'm placing this here because crypto utilities are used by
+Gemini: "I'm placing this here because crypto utilities are used by
 multiple services. Proceeding with the deviation."
 
 ...file created...
@@ -1615,14 +1615,14 @@ SessionStart injects:
 - Conventions detected: 8
 </codebase-intelligence>
 
-Claude now KNOWS:
+Gemini now KNOWS:
 - Where services go (and what naming to use)
 - Component naming conventions
 - API route structure
 - That crypto.ts is a known exception
 
 No manual configuration. No stale documentation.
-The codebase taught Claude its own patterns.
+The codebase taught Gemini its own patterns.
 ```
 
 ---
@@ -1773,7 +1773,7 @@ With semantic.db (optional):
 ### Error Handling
 
 All hooks follow silent failure principle:
-- Never break Claude's workflow
+- Never break Gemini's workflow
 - Log errors only if `INTEL_DEBUG=1`
 - Return `{ proceed: true }` on any error
 - Corrupted files reset to defaults
@@ -1785,10 +1785,10 @@ All hooks follow silent failure principle:
 The Codebase Intelligence System transforms GSD from a planning/execution framework into a **learning system** that understands your codebase and gets smarter over time.
 
 **Key innovations:**
-1. **Hook-driven** - Uses Claude Code's native infrastructure
+1. **Hook-driven** - Uses Gemini CLI's native infrastructure
 2. **Zero API calls** - Pure local computation
 3. **Incremental** - Builds knowledge as you build code
 4. **Advisory** - Guides without blocking
 5. **Self-improving** - Learns from every session
 
-**The result:** By session 5, Claude knows your codebase conventions without being told. By session 10, it's an expert in your project's patterns. No manual documentation. No stale snapshots. Just accumulated wisdom that grows with your code.
+**The result:** By session 5, Gemini knows your codebase conventions without being told. By session 10, it's an expert in your project's patterns. No manual documentation. No stale snapshots. Just accumulated wisdom that grows with your code.

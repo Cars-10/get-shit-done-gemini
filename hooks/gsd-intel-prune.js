@@ -4,7 +4,7 @@
  * Intel Prune Hook (Stop event)
  *
  * Removes stale entries from index.json when files no longer exist.
- * Runs after each Claude response to keep intel fresh.
+ * Runs after each Gemini response to keep intel fresh.
  *
  * Fast: Only does fs.existsSync checks, no file reading.
  * Silent: Never blocks or errors, always exits 0.
@@ -72,7 +72,7 @@ process.stdin.on('end', () => {
     pruneIndex();
     process.exit(0);
   } catch (error) {
-    // Silent failure - never block Claude
+    // Silent failure - never block Gemini
     process.exit(0);
   }
 });

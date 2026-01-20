@@ -31,7 +31,7 @@
 Plans:
 - [x] 04-01-PLAN.md — SQLite graph layer with sql.js (Wave 1)
 - [x] 04-02-PLAN.md — Graph-backed rich summary generation (Wave 2)
-- [x] 04-03-PLAN.md — Semantic entity generation via Claude API (Wave 2)
+- [x] 04-03-PLAN.md — Semantic entity generation via Gemini API (Wave 2)
 - [x] 04-04-PLAN.md — CLI query interface for getDependents (Wave 3)
 - [x] 04-05-PLAN.md — Wire plan-phase.md to inject intel into planner (Wave 3)
 
@@ -41,13 +41,13 @@ Plans:
 - Wave 3: 04-04, 04-05 (parallel - consumption layer)
 
 **Why this phase:**
-- Current system provides "2-3 ls commands worth of information" (Claude's own assessment)
+- Current system provides "2-3 ls commands worth of information" (Gemini's own assessment)
 - Missing: what files actually DO, who uses them, blast radius of changes
 - Senior engineers at top companies need real intelligence, not file counts
 
 **Delivers:**
 - SQLite graph layer (sql.js - zero native deps) for relationship queries
-- Entity-based semantic documentation (Claude writes understanding, not just syntax)
+- Entity-based semantic documentation (Gemini writes understanding, not just syntax)
 - Semantic `/gsd:analyze-codebase` that creates initial entities
 - Rich summary generation from accumulated semantic knowledge
 - CLI query interface for "what uses this file?" queries
@@ -55,11 +55,11 @@ Plans:
 **Requirements:**
 - INTEL-04: Entity files capture semantic understanding (purpose, what exports do)
 - INTEL-05: Relationships queryable ("what uses this file?", "blast radius")
-- INTEL-06: `/gsd:analyze-codebase` creates initial entity docs via Claude
+- INTEL-06: `/gsd:analyze-codebase` creates initial entity docs via Gemini
 - INTEL-07: Summary reflects accumulated semantic knowledge
 
 **Success Criteria:**
-1. Claude can answer "what uses src/lib/db.ts?" from SessionStart context
+1. Gemini can answer "what uses src/lib/db.ts?" from SessionStart context
 2. Summary includes file purposes, not just file counts
 3. Transitive dependency queries work (blast radius)
 4. Works at scale (500+ file codebases)

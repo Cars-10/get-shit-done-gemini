@@ -989,7 +989,7 @@ fi
 
 **6. Create or update entity:**
 
-Use template from `~/.claude/get-shit-done/templates/entity.md`.
+Use template from `~/.gemini/get-shit-done/templates/entity.md`.
 
 Fill fields based on what you just built:
 

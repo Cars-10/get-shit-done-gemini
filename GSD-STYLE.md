@@ -528,7 +528,7 @@ GSD includes an automatic codebase learning system that indexes code and detects
 **PostToolUse hook (intel-index.js):**
 - Triggers on Write/Edit of JS/TS files
 - Incremental update (single file per invocation)
-- Silent failure (never blocks Claude)
+- Silent failure (never blocks Gemini)
 - Regenerates conventions.json and summary.md on every update
 
 **SessionStart hook (intel-session.js):**

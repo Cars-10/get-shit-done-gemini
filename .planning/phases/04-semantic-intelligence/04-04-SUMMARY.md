@@ -13,7 +13,7 @@ requires:
 provides:
   - CLI query interface via stdin for graph database queries
   - handleQuery() routing function for dependents and hotspots queries
-  - JSON output to stdout for Claude consumption
+  - JSON output to stdout for Gemini consumption
 affects: [codebase-analysis, dependency-tracking, refactoring-safety]
 
 # Tech tracking
@@ -41,7 +41,7 @@ completed: 2026-01-20
 
 # Phase 04 Plan 04: CLI Query Interface Summary
 
-**CLI query interface exposes getDependents() and getHotspots() via stdin, enabling Claude to answer "what uses this file?" questions**
+**CLI query interface exposes getDependents() and getHotspots() via stdin, enabling Gemini to answer "what uses this file?" questions**
 
 ## Performance
 
@@ -92,7 +92,7 @@ None - no external service configuration required.
 **Gap closure complete.** INTEL-05 verification is now unblocked:
 - getDependents() is callable via CLI query interface
 - Graph database queries work end-to-end (stdin → query → stdout)
-- Claude can query dependency information during sessions
+- Gemini can query dependency information during sessions
 
 The semantic intelligence system is complete and ready for production use.
 

@@ -88,7 +88,7 @@ Files that import this one, using wiki-links:
 - [[src-components-dashboard]]
 ```
 
-Initially may be empty or incomplete. Updated as Claude encounters imports.
+Initially may be empty or incomplete. Updated as Gemini encounters imports.
 
 **Notes** (optional)
 Patterns, gotchas, or context:

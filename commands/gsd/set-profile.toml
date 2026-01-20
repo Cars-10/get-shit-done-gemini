@@ -1,12 +1,6 @@
----
-name: set-profile
-description: Switch model profile for GSD agents (quality/balanced/budget)
-arguments:
-  - name: profile
-    description: "Profile name: quality, balanced, or budget"
-    required: true
----
+description = "Switch model profile for GSD agents (quality/balanced/budget)"
 
+prompt = """
 <objective>
 Switch the model profile used by GSD agents. This controls which Gemini model each agent uses, balancing quality vs token spend.
 </objective>
@@ -24,8 +18,8 @@ Switch the model profile used by GSD agents. This controls which Gemini model ea
 ## 1. Validate argument
 
 ```
-if $ARGUMENTS.profile not in ["quality", "balanced", "budget"]:
-  Error: Invalid profile "$ARGUMENTS.profile"
+if $ARGUMENTS.profile not in [\"quality\", \"balanced\", \"budget\"]:
+  Error: Invalid profile \"$ARGUMENTS.profile\"
   Valid profiles: quality, balanced, budget
   STOP
 ```
@@ -52,7 +46,7 @@ cat .planning/config.json
 Update `model_profile` field (or add if missing):
 ```json
 {
-  "model_profile": "$ARGUMENTS.profile"
+  \"model_profile\": \"$ARGUMENTS.profile\"
 }
 ```
 
@@ -104,3 +98,4 @@ Agents will now use:
 ```
 
 </examples>
+"""

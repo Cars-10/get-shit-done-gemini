@@ -1,12 +1,12 @@
 # Phase 5: Subagent Codebase Analysis - Research
 
 **Researched:** 2026-01-20
-**Domain:** Subagent orchestration, context window management, Claude Code Task tool
+**Domain:** Subagent orchestration, context window management, Gemini CLI Task tool
 **Confidence:** HIGH
 
 ## Summary
 
-Phase 5 refactors the current `/gsd:analyze-codebase` entity generation from main-context execution to subagent delegation. The current implementation (Phase 4) has Claude executing the command generate entity content directly via the Task tool with batches of 10 files, but ALL exploration and decision-making happens in the main orchestrator context.
+Phase 5 refactors the current `/gsd:analyze-codebase` entity generation from main-context execution to subagent delegation. The current implementation (Phase 4) has Gemini executing the command generate entity content directly via the Task tool with batches of 10 files, but ALL exploration and decision-making happens in the main orchestrator context.
 
 **The problem:** On large codebases (500+ files), the orchestrator exhausts context by:
 1. Reading all files during selection (identifying which 50 files to generate entities for)
@@ -29,7 +29,7 @@ Phase 5 refactors the current `/gsd:analyze-codebase` entity generation from mai
 
 | Library | Version | Purpose | Why Standard |
 |---------|---------|---------|--------------|
-| Claude Code Task tool | Built-in | Subagent spawning with model selection | Official Claude Code orchestration primitive |
+| Gemini CLI Task tool | Built-in | Subagent spawning with model selection | Official Gemini CLI orchestration primitive |
 | sql.js | 1.12.0+ | Graph database in subagent context | Subagent needs graph access to resolve [[wiki-links]] |
 
 ### Supporting
@@ -74,7 +74,7 @@ Subagent (gsd-entity-generator):
 ├── Load file list from prompt
 ├── For each file:
 │   ├── Read file content
-│   ├── Generate entity markdown (Claude's own analysis)
+│   ├── Generate entity markdown (Gemini's own analysis)
 │   ├── Write to .planning/intel/entities/{slug}.md
 │   └── PostToolUse hook syncs to graph.db
 └── Return confirmation statistics
@@ -146,7 +146,7 @@ After all files processed, return statistics:
 # DON'T: Return entity contents to orchestrator
 entities = []
 for file in files:
-    entity = generate_entity(file)  # Claude generates
+    entity = generate_entity(file)  # Gemini generates
     entities.append(entity)         # Accumulates in context
 return entities                     # Passes back to orchestrator
 ```
@@ -156,7 +156,7 @@ return entities                     # Passes back to orchestrator
 ```python
 # DO: Write directly, return only confirmation
 for file in files:
-    entity_content = generate_entity(file)  # Claude generates
+    entity_content = generate_entity(file)  # Gemini generates
     Write(path=f".planning/intel/entities/{slug}.md", content=entity_content)
     # PostToolUse hook automatically syncs to graph.db
 
@@ -184,11 +184,11 @@ MODEL_PROFILE=$(cat .planning/config.json 2>/dev/null | \
 ```python
 # Model lookup table for gsd-entity-generator
 model_map = {
-    "quality": "claude-opus-4-5-20251101",
-    "balanced": "claude-sonnet-4-5-20250929",
-    "budget": "claude-sonnet-4-5-20250929"
+    "quality": .gemini-opus-4-5-20251101",
+    "balanced": .gemini-sonnet-4-5-20250929",
+    "budget": .gemini-sonnet-4-5-20250929"
 }
-model = model_map.get(MODEL_PROFILE, "claude-sonnet-4-5-20250929")
+model = model_map.get(MODEL_PROFILE, .gemini-sonnet-4-5-20250929")
 ```
 
 **Why this matters:** Entity generation is semantic analysis (requires strong reasoning). Sonnet 4.5 adequate for balanced/budget, Opus 4.5 for quality profile.
@@ -269,7 +269,7 @@ for file in selected_files:
 
 | Problem | Don't Build | Use Instead | Why |
 |---------|-------------|-------------|-----|
-| Subagent orchestration | Custom process spawning | Claude Code Task tool | Built-in, handles model selection, output capture, error handling |
+| Subagent orchestration | Custom process spawning | Gemini CLI Task tool | Built-in, handles model selection, output capture, error handling |
 | File batching | Complex batch scheduling | Single subagent with full file list | Subagent has 200k context (enough for 500 file paths), no coordination overhead |
 | Entity template | Embedded in subagent logic | Pass template in prompt | Template may evolve, keep it in prompt not in subagent code |
 | Graph database access | Direct sql.js in subagent | PostToolUse hook handles sync | Hooks are designed for this, no need to duplicate graph logic |
@@ -369,9 +369,9 @@ Resolve model for gsd-entity-generator:
 
 | Profile | Model |
 |---------|-------|
-| quality | claude-opus-4-5-20251101 |
-| balanced | claude-sonnet-4-5-20250929 |
-| budget | claude-sonnet-4-5-20250929 |
+| quality |.gemini-opus-4-5-20251101 |
+| balanced |.gemini-sonnet-4-5-20250929 |
+| budget |.gemini-sonnet-4-5-20250929 |
 
 Spawn entity generator subagent:
 
@@ -709,10 +709,10 @@ Entity generation complete when:
 | Orchestrator generates entities | Subagent delegation | Phase 5 (planned) | Prevents context exhaustion on large codebases |
 | Sequential processing in main context | Fresh 200k subagent context | Phase 5 (planned) | Scales to 500+ files without orchestrator bloat |
 | Batches of 10 with multiple Task calls | Single subagent, all files | Phase 5 (planned) | Simpler orchestration, no batch coordination |
-| Hook generates entities via `claude -p` | Subagent generates entities | Phase 5 (planned) | Richer semantic analysis (subagent has full context vs hook's one-shot) |
+| Hook generates entities via .gemini -p` | Subagent generates entities | Phase 5 (planned) | Richer semantic analysis (subagent has full context vs hook's one-shot) |
 
 **Deprecated/outdated:**
-- **Hook-based entity generation** (Phase 4 uses `execSync('claude -p')` in hook): Limited to 30s timeout, no retry, crude prompt passing. Phase 5 moves to proper subagent pattern.
+- **Hook-based entity generation** (Phase 4 uses `execSync(.gemini -p')` in hook): Limited to 30s timeout, no retry, crude prompt passing. Phase 5 moves to proper subagent pattern.
 - **Multiple parallel subagents** for entity batches: Overcomplicated, race condition risks, excessive overhead. Single subagent with full file list is cleaner.
 
 ## Open Questions
@@ -753,7 +753,7 @@ Entity generation complete when:
 
 ### Secondary (MEDIUM confidence)
 
-- [Claude Code documentation on Task tool](https://docs.anthropic.com/claude/docs/claude-code) - Official docs on subagent spawning
+- [Gemini CLI documentation on Task tool](https://docs.anthropic.com.gemini/docs/gemini-cli) - Official docs on subagent spawning
 - [Phase 4 research findings](.planning/phases/04-semantic-intelligence/04-RESEARCH.md) - Context window management patterns
 
 ### Tertiary (LOW confidence)
@@ -763,12 +763,12 @@ Entity generation complete when:
 ## Metadata
 
 **Confidence breakdown:**
-- Standard stack: HIGH - Task tool is official Claude Code primitive, sql.js already in use
+- Standard stack: HIGH - Task tool is official Gemini CLI primitive, sql.js already in use
 - Architecture: HIGH - Pattern directly mirrors gsd-codebase-mapper.md (proven)
 - Pitfalls: HIGH - Based on direct code analysis and understanding of context limits
 - Open questions: MEDIUM - Edge cases identifiable but not yet tested at scale
 
 **Research date:** 2026-01-20
-**Valid until:** 60 days (stable Claude Code APIs, no fast-moving dependencies)
+**Valid until:** 60 days (stable Gemini CLI APIs, no fast-moving dependencies)
 
 **Critical insight:** Phase 5 is an architectural refactor, not a feature addition. The goal is context preservation, not new capabilities. Success = same output with less orchestrator context usage.

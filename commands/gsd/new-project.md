@@ -63,7 +63,7 @@ This is the most leveraged moment in any project. Deep questioning here means be
    mkdir -p .planning/intel
    ```
 
-   This prepares the directory for the PostToolUse hook to populate with index.json, conventions.json, and summary.md as Claude writes code.
+   This prepares the directory for the PostToolUse hook to populate with index.json, conventions.json, and summary.md as Gemini writes code.
 
 4. **Detect existing code (brownfield detection):**
    ```bash
