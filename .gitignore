@@ -2,5 +2,10 @@ node_modules/
 package-lock.json
 .DS_Store
 TO-DOS.md
-.gemini/
-test-output/
+CLAUDE.md
+.planning
+/research.claude/
+commands.html
+
+# Local test installs
+.claude/
