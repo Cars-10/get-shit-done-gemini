@@ -12,7 +12,7 @@
 <br>
 
 ```bash
-npx get-shit-done-gemini
+npx github:Cars-10/get-shit-done-gemini
 ```
 
 **Works on Mac, Windows, and Linux.**
@@ -63,7 +63,7 @@ GSD fixes that. It's the context engineering layer that makes Gemini CLI reliabl
 ## Getting Started
 
 ```bash
-npx get-shit-done-gemini
+npx github:Cars-10/get-shit-done-gemini
 ```
 
 That's it. Verify with `/gsd:help` inside your Gemini CLI interface.
