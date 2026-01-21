@@ -704,10 +704,13 @@ TBD
 
 [Optional: any important patterns or gotchas, or remove this section]`;
 
-  try {
-    // Spawn.gemini -p with timeout
-    const cmd = .gemini -p "${prompt.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`;
-    const result = execSync(cmd, {
+    try {
+
+      // Spawn gemini -p with timeout
+
+      const cmd = `gemini -p "${prompt.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`;
+
+      const result = execSync(cmd, {
       encoding: 'utf8',
       timeout: 30000, // 30 second timeout
       maxBuffer: 1024 * 1024 // 1MB buffer
