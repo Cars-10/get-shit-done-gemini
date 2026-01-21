@@ -3,13 +3,16 @@
 const fs = require('fs');
 const path = require('path');
 const chokidar = require('chokidar');
-const initSqlJs = require('sql.js');
+// Use ASM.js version consistent with other modules
+const initSqlJs = require('sql.js/dist/sql-asm.js');
+const { runSubagent } = require('../lib/intel/subagent-host');
 
 // Configuration
 const INTEL_DIR = path.resolve(process.cwd(), '.planning/intel');
 const GRAPH_DB_PATH = path.join(INTEL_DIR, 'graph.db');
 const PID_FILE = path.join(INTEL_DIR, 'gsd-watch.pid');
 const LOG_FILE = path.resolve(process.cwd(), '.gemini/gsd-watch.log');
+const INDEXER_SCRIPT = path.resolve(__dirname, '../agents/indexer.js');
 
 // Ensure directories exist
 if (!fs.existsSync(INTEL_DIR)) fs.mkdirSync(INTEL_DIR, { recursive: true });
@@ -61,45 +64,60 @@ async function start() {
     log('Loaded existing graph DB.');
   } else {
     db = new SQL.Database();
-    // Initialize Schema (matching hooks/gsd-intel-index.js)
-    db.run(`
-      CREATE TABLE IF NOT EXISTS nodes (
-        id TEXT PRIMARY KEY,
-        type TEXT,
-        path TEXT,
-        hash TEXT,
-        metadata TEXT
-      );
-      CREATE TABLE IF NOT EXISTS edges (
-        source TEXT,
-        target TEXT,
-        type TEXT,
-        metadata TEXT,
-        PRIMARY KEY (source, target, type)
-      );
-    `);
-    log('Created new graph DB.');
+    log('Initialized new graph DB (schema will be created by subagent).');
   }
-
-  const saveDb = debounce(() => {
-    const data = db.export();
-    const buffer = Buffer.from(data);
-    fs.writeFileSync(GRAPH_DB_PATH, buffer);
-    log('Graph saved to disk.');
-  }, 1000);
 
   // Batch Processing
   const processQueue = new Set();
-  const processBatch = debounce(() => {
+  let isProcessing = false;
+
+  const processBatch = debounce(async () => {
+    if (isProcessing) {
+      processBatch(); // Re-schedule checks
+      return;
+    }
+
+    if (processQueue.size === 0) return;
+
+    isProcessing = true;
     const files = [...processQueue];
     processQueue.clear();
+
     log(`Batch processing ${files.length} files...`);
-    for (const file of files) {
-      if (fs.existsSync(file)) {
-        processFile(file, db, saveDb);
-      } else {
-        removeFile(file, db, saveDb);
+
+    const manifestPath = path.join(INTEL_DIR, `batch-${Date.now()}.json`);
+    try {
+      fs.writeFileSync(manifestPath, JSON.stringify(files));
+
+      // Hand off DB to subagent
+      db = await runSubagent(db, GRAPH_DB_PATH, INDEXER_SCRIPT, [manifestPath]);
+      
+      log(`Batch complete`);
+    } catch (e) {
+      log(`Subagent failed: ${e.message}`);
+      // Recover DB connection manually since runSubagent might have failed
+      // (though runSubagent tries to reload, if it rejects, we need to handle here)
+      try {
+        if (db) { try { db.close(); } catch(e2){} }
+        
+        if (fs.existsSync(GRAPH_DB_PATH)) {
+          const fb = fs.readFileSync(GRAPH_DB_PATH);
+          db = new SQL.Database(fb);
+        } else {
+          db = new SQL.Database();
+        }
+        log('DB connection recovered.');
+      } catch (recErr) {
+        log(`CRITICAL: Failed to recover DB: ${recErr.message}`);
+        // If we can't recover DB, we might need to exit or restart
+        process.exit(1);
       }
+    } finally {
+      if (fs.existsSync(manifestPath)) fs.unlinkSync(manifestPath);
+      isProcessing = false;
+
+      // If more items came in while processing, trigger again
+      if (processQueue.size > 0) processBatch();
     }
   }, 1000);
 
@@ -118,7 +136,7 @@ async function start() {
 
   watcher.on('add', path => { processQueue.add(path); processBatch(); });
   watcher.on('change', path => { processQueue.add(path); processBatch(); });
-  watcher.on('unlink', path => { processQueue.add(path); processBatch(); });
+  watcher.on('unlink', path => { processQueue.add(path); processBatch(); }); // Indexer handles existence checks
   watcher.on('error', error => log(`Watcher error: ${error}`));
 
   log('Watching for changes...');
@@ -132,23 +150,16 @@ async function start() {
   function cleanup() {
     log('Stopping...');
     watcher.close();
+    if (db) {
+        try {
+            const data = db.export();
+            fs.writeFileSync(GRAPH_DB_PATH, Buffer.from(data));
+            db.close();
+        } catch(e) { log(`Save on exit failed: ${e.message}`); }
+    }
     fs.unlinkSync(PID_FILE);
     process.exit(0);
   }
-}
-
-function processFile(filePath, db, save) {
-  if (!filePath.endsWith('.js') && !filePath.endsWith('.ts')) return;
-  log(`Processing: ${filePath}`);
-  // TODO: Add regex parsing logic here (similar to gsd-intel-index.js)
-  // For now, just a placeholder to verify architecture
-  save();
-}
-
-function removeFile(filePath, db, save) {
-  log(`Removed: ${filePath}`);
-  // TODO: Remove nodes from DB
-  save();
 }
 
 start().catch(err => {
