@@ -15,7 +15,7 @@
 - [x] **UAT-02**: Visual comparison logic (Gemini vision) to catch CSS regressions and visual bugs.
 
 ### Self-Healing
-- [ ] **HEAL-01**: Post-milestone "Retrospective Agent" to analyze git history and update style guides.
+- [x] **HEAL-01**: Post-milestone "Retrospective Agent" to analyze git history and update style guides.
 
 ### Out of Scope (v2)
 - Native Gemini CLI hooks (requires Google support).

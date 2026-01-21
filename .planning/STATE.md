@@ -1,7 +1,7 @@
 # Project State
 
 ## Current Status
-**Phase:** 3 (Multimodal Verification)
+**Phase:** 4 (Self-Healing & Polish)
 **Status:** Complete
 
 ## Accumulated Context
@@ -14,6 +14,8 @@
 - **Decision:** Visual verification artifacts stored in `tests/visual/`.
 - **Decision:** `*.png` ignored in git except `*-golden.png`.
 - **Implemented:** `checkpoint:visual-verify` protocol in Executor/Verifier.
+- **Decision:** Retrospective Agent analyzes git history for style updates.
+- **Decision:** `/gsd:retrospective` uses human verification checkpoint before modifying `GSD-STYLE.md`.
 
 ## Pending Todos
 (None)
