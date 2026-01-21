@@ -122,6 +122,7 @@ Build authentication system
 - `type="auto"` — Gemini executes autonomously
 - `type="checkpoint:human-verify"` — User must verify
 - `type="checkpoint:decision"` — User must choose
+- `type="checkpoint:visual-verify"` — Gemini pauses for user screenshot (path: `tests/visual/{phase}-{plan}-{slug}.png`)
 
 ### Checkpoint Structure
 

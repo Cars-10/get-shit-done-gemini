@@ -170,6 +170,14 @@ Check that the file has real implementation, not a stub.
 check_length() {
   local path="$1"
   local min_lines="$2"
+  
+  # Image check
+  if [[ "$path" == *.png || "$path" == *.jpg || "$path" == *.jpeg ]]; then
+    local size=$(wc -c < "$path" 2>/dev/null || echo 0)
+    [ "$size" -gt 0 ] && echo "SUBSTANTIVE (image present)" || echo "EMPTY (0 bytes)"
+    return
+  fi
+
   local lines=$(wc -l < "$path" 2>/dev/null || echo 0)
   [ "$lines" -ge "$min_lines" ] && echo "SUBSTANTIVE ($lines lines)" || echo "THIN ($lines lines)"
 }
@@ -532,6 +540,29 @@ The planner (`/gsd:plan-phase --gaps`) reads this gap analysis and creates appro
 **Group related gaps by concern** when possible — if multiple truths fail because of the same root cause (e.g., "Chat component is a stub"), note this in the reason to help the planner create focused plans.
 
 </verification_process>
+
+<multimodal_capabilities>
+**Visual Verification Logic**
+
+When a plan involves `checkpoint:visual-verify`, the artifact is an image file (e.g., `tests/visual/*.png`).
+
+**1. Existence Check**
+- Verify file exists at expected path.
+- Verify it is a valid image (not 0 bytes).
+
+**2. Semantic Content Analysis (Simulated)**
+Since you (Gemini) cannot "see" the image file content directly in this CLI mode unless provided via a specific tool (which isn't available), you rely on the **User's explicit confirmation** during the `checkpoint:visual-verify` step.
+
+**However, IF the image path is provided in your context (e.g., via a future update enabling image upload):**
+- Compare image content against the "Observable Truths".
+- **Padding/Alignment:** Check if UI elements look crowded or misaligned.
+- **Colors:** Check if brand colors are used.
+- **Text:** OCR the text in the image to verify it matches expected copy.
+
+**For now (Text-only mode):**
+- Trust the existence of the file + User's "done" signal from the checkpoint.
+- Verify the file is tracked in git (if applicable) or explicitly ignored (if it's a test artifact).
+</multimodal_capabilities>
 
 <output>
 

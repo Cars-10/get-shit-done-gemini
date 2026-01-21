@@ -390,7 +390,29 @@ For visual/functional verification after you automated something.
 Type "approved" or describe issues to fix.
 ```
 
-**checkpoint:decision (9% of checkpoints)**
+**checkpoint:visual-verify (5% of checkpoints)**
+
+For UI/Terminal visual validation where programmatic verification is insufficient.
+
+```markdown
+### Checkpoint Details
+
+**Visual Verification Required:**
+[What needs to be seen]
+
+**Action Required:**
+Take a screenshot of [target window/region] and save to:
+`tests/visual/{phase}-{plan}-{slug}.png`
+
+**I'll verify:**
+That the image exists and matches expectations.
+
+### Awaiting
+
+Type "done" when the screenshot is saved.
+```
+
+**checkpoint:decision (4% of checkpoints)**
 
 For implementation choices requiring user input.
 
