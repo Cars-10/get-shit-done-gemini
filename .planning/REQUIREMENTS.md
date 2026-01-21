@@ -1,9 +1,9 @@
 ## v1 Requirements
 
 ### Intelligence & Automation
-- [ ] **WATCHER-01**: Standalone daemon (`npm run gsd-watch`) using `chokidar` for real-time file monitoring.
-- [ ] **INTEL-01**: SQLite graph schema (`nodes`, `edges`) implemented via `sql.js` (WASM) for portable graph storage.
-- [ ] **INTEL-02**: Automatic indexing of JS/TS exports and imports on file save to keep the graph current.
+- [x] **WATCHER-01**: Standalone daemon (`npm run gsd-watch`) using `chokidar` for real-time file monitoring.
+- [x] **INTEL-01**: SQLite graph schema (`nodes`, `edges`) implemented via `sql.js` (WASM) for portable graph storage.
+- [x] **INTEL-02**: Automatic indexing of JS/TS exports and imports on file save to keep the graph current.
 - [ ] **INTEL-03**: Incremental "Semantic Purpose" generation for new files using sub-agents.
 
 ### Prompt Engineering
