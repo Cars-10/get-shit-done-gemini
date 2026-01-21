@@ -11,3 +11,7 @@ commands.html
 
 # Build artifacts (committed to npm, not git)
 hooks/dist/
+
+# Visual Verification
+tests/visual/*.png
+!tests/visual/*-golden.png
