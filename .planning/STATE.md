@@ -2,11 +2,11 @@
 
 ## Current Status
 **Phase:** 5 (Subagent Codebase Analysis)
-**Status:** In progress
-**Plan:** 02 of 3 (Delegated Entity Generation)
-**Last activity:** 2026-01-21 - Completed 05-02-PLAN.md
+**Status:** Complete
+**Plan:** 03 of 3 (Orchestrator Integration)
+**Last activity:** 2026-01-21 - Completed 05-03-PLAN.md
 
-**Progress:** ░░░░░░░░░░ (2/3 plans in phase 5) -> 66%
+**Progress:** █ 100% (3/3 plans in phase 5)
 
 ## Accumulated Context
 - **Decision:** Use `chokidar` for file watching.
@@ -22,6 +22,9 @@
 - **Decision:** `/gsd:retrospective` uses human verification checkpoint before modifying `GSD-STYLE.md`.
 - **Decision:** Use `sql.js` export/import for DB state handoff between processes.
 - **Decision:** Use separate log files for subagent IPC/debugging.
+- **Decision:** Decouple analysis regexes from file system access to allow easier testing.
+- **Decision:** Use manifest file for passing changed file list to indexer batch.
+- **Decision:** Path-Only mode relies entirely on graph metadata (exports/imports).
 
 ## Pending Todos
 (None)
