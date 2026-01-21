@@ -1,7 +1,7 @@
 # Project State
 
 ## Current Status
-**Phase:** 2 (Massive Context Intelligence)
+**Phase:** 3 (Multimodal Verification)
 **Status:** Complete
 
 ## Accumulated Context
@@ -11,6 +11,9 @@
 - **Implemented:** Watcher daemon `bin/gsd-watch.js`.
 - **Decision:** Use Recursive CTE for dependency resolution.
 - **Implemented:** `gsd-context` CLI and `ReferenceContextBuilder`.
+- **Decision:** Visual verification artifacts stored in `tests/visual/`.
+- **Decision:** `*.png` ignored in git except `*-golden.png`.
+- **Implemented:** `checkpoint:visual-verify` protocol in Executor/Verifier.
 
 ## Pending Todos
 (None)

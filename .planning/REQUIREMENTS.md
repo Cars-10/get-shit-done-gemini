@@ -11,8 +11,8 @@
 - [x] **CONTEXT-02**: Automatic ingestion of relevant subdirectories into the Reference Tier for 1M+ token context.
 
 ### Verification (Multimodal)
-- [ ] **UAT-01**: Support for `checkpoint:visual-verify` in execution plans to enable screenshot-based verification.
-- [ ] **UAT-02**: Visual comparison logic (Gemini vision) to catch CSS regressions and visual bugs.
+- [x] **UAT-01**: Support for `checkpoint:visual-verify` in execution plans to enable screenshot-based verification.
+- [x] **UAT-02**: Visual comparison logic (Gemini vision) to catch CSS regressions and visual bugs.
 
 ### Self-Healing
 - [ ] **HEAL-01**: Post-milestone "Retrospective Agent" to analyze git history and update style guides.
