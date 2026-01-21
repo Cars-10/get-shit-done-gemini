@@ -11,11 +11,14 @@ const fs = require('fs');
 const path = require('path');
 
 const HOOKS_DIR = path.join(__dirname, '..', 'hooks');
+const BIN_DIR = path.join(__dirname, '..', 'bin');
 const DIST_DIR = path.join(HOOKS_DIR, 'dist');
 
 // Hooks that need bundling (have npm dependencies)
-const HOOKS_TO_BUNDLE = [
-  'gsd-intel-index.js'
+// Format: { name: 'filename.js', dir: HOOKS_DIR }
+const ITEMS_TO_BUNDLE = [
+  { name: 'gsd-intel-index.js', dir: HOOKS_DIR },
+  { name: 'gsd-watch.js', dir: BIN_DIR }
 ];
 
 // Hooks that are pure Node.js (just copy)
@@ -32,17 +35,17 @@ async function build() {
     fs.mkdirSync(DIST_DIR, { recursive: true });
   }
 
-  // Bundle hooks with dependencies
-  for (const hook of HOOKS_TO_BUNDLE) {
-    const entryPoint = path.join(HOOKS_DIR, hook);
-    const outfile = path.join(DIST_DIR, hook);
+  // Bundle items with dependencies
+  for (const item of ITEMS_TO_BUNDLE) {
+    const entryPoint = path.join(item.dir, item.name);
+    const outfile = path.join(DIST_DIR, item.name);
 
     if (!fs.existsSync(entryPoint)) {
-      console.warn(`Warning: ${hook} not found, skipping`);
+      console.warn(`Warning: ${item.name} not found in ${item.dir}, skipping`);
       continue;
     }
 
-    console.log(`Bundling ${hook}...`);
+    console.log(`Bundling ${item.name}...`);
 
     await esbuild.build({
       entryPoints: [entryPoint],
