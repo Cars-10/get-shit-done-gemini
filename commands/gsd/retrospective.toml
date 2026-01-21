@@ -1,0 +1,5 @@
+description = "Analyze recent work and update style guide"
+
+prompt = """
+@commands/gsd/retrospective.md
+"""
