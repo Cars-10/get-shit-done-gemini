@@ -712,7 +712,7 @@ Entity generation complete when:
 | Hook generates entities via .gemini -p` | Subagent generates entities | Phase 5 (planned) | Richer semantic analysis (subagent has full context vs hook's one-shot) |
 
 **Deprecated/outdated:**
-- **Hook-based entity generation** (Phase 4 uses `execSync(.gemini -p')` in hook): Limited to 30s timeout, no retry, crude prompt passing. Phase 5 moves to proper subagent pattern.
+- **Hook-based entity generation** (Phase 4 uses `execSync('gemini -p')` in hook): Limited to 30s timeout, no retry, crude prompt passing. Phase 5 moves to proper subagent pattern.
 - **Multiple parallel subagents** for entity batches: Overcomplicated, race condition risks, excessive overhead. Single subagent with full file list is cleaner.
 
 ## Open Questions

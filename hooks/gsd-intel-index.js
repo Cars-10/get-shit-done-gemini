@@ -643,7 +643,7 @@ function signatureChanged(prevEntry, exports, imports) {
 
 /**
  * Generate semantic entity file using Gemini
- * Spawns .gemini -p` to analyze file and generate entity markdown
+ * Spawns `gemini -p` to analyze file and generate entity markdown
  *
  * @param {string} filePath - Path to the code file
  * @param {string} content - File content
@@ -706,7 +706,7 @@ TBD
 
   try {
     // Spawn.gemini -p with timeout
-    const cmd = .gemini -p "${prompt.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`;
+    const cmd = `gemini -p "${prompt.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`;
     const result = execSync(cmd, {
       encoding: 'utf8',
       timeout: 30000, // 30 second timeout

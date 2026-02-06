@@ -20,18 +20,18 @@ const args = process.argv.slice(2);
 const hasGlobal = args.includes('--global') || args.includes('-g');
 const hasLocal = args.includes('--local') || args.includes('-l');
 const hasOpencode = args.includes('--opencode');
-const hasGemini = args.includes('-.gemini');
+const hasGemini = args.includes('--gemini');
 const hasBoth = args.includes('--both');
 const hasUninstall = args.includes('--uninstall') || args.includes('-u');
 
 // Runtime selection - can be set by flags or interactive prompt
 let selectedRuntimes = [];
 if (hasBoth) {
-  selectedRuntimes = [.gemini', 'opencode'];
+  selectedRuntimes = ['gemini', 'opencode'];
 } else if (hasOpencode) {
   selectedRuntimes = ['opencode'];
 } else if (hasGemini) {
-  selectedRuntimes = [.gemini'];
+  selectedRuntimes = ['gemini'];
 }
 
 // Helper to get directory name for a runtime (used for local/project installs)
@@ -66,7 +66,7 @@ function getOpencodeGlobalDir() {
 
 /**
  * Get the global config directory for a runtime
- * @param {string} runtime - .gemini' or 'opencode'
+ * @param {string} runtime - 'gemini' or 'opencode'
  * @param {string|null} explicitDir - Explicit directory from --config-dir flag
  */
 function getGlobalDir(runtime, explicitDir = null) {
@@ -138,7 +138,7 @@ if (hasHelp) {
   ${yellow}Options:${reset}
     ${cyan}-g, --global${reset}              Install globally (to config directory)
     ${cyan}-l, --local${reset}               Install locally (to current directory)
-    ${cyan}-.gemini${reset}                  Install for Gemini CLI only
+    ${cyan}--gemini${reset}                  Install for Gemini CLI only
     ${cyan}--opencode${reset}                Install for OpenCode only
     ${cyan}--both${reset}                    Install for both Gemini CLI and OpenCode
     ${cyan}-u, --uninstall${reset}           Uninstall GSD (remove all GSD files)
@@ -151,7 +151,7 @@ if (hasHelp) {
     npx get-shit-done-gemini
 
     ${dim}# Install for Gemini CLI globally${reset}
-    npx get-shit-done-gemini -.gemini --global
+    npx get-shit-done-gemini --gemini --global
 
     ${dim}# Install for OpenCode globally${reset}
     npx get-shit-done-gemini --opencode --global
@@ -160,16 +160,16 @@ if (hasHelp) {
     npx get-shit-done-gemini --both --global
 
     ${dim}# Install to custom config directory${reset}
-    npx get-shit-done-gemini -.gemini --global --config-dir ~/.gemini-bc
+    npx get-shit-done-gemini --gemini --global --config-dir ~/.gemini-bc
 
     ${dim}# Install to current project only${reset}
-    npx get-shit-done-gemini -.gemini --local
+    npx get-shit-done-gemini --gemini --local
 
     ${dim}# Uninstall GSD from Gemini CLI globally${reset}
-    npx get-shit-done-gemini -.gemini --global --uninstall
+    npx get-shit-done-gemini --gemini --global --uninstall
 
     ${dim}# Uninstall GSD from current project${reset}
-    npx get-shit-done-gemini -.gemini --local --uninstall
+    npx get-shit-done-gemini --gemini --local --uninstall
 
   ${yellow}Notes:${reset}
     The --config-dir option is useful when you have multiple Gemini CLI
@@ -380,7 +380,7 @@ function convertGeminiToOpencodeFrontmatter(content) {
  * @param {string} destDir - Destination directory (e.g., command/)
  * @param {string} prefix - Prefix for filenames (e.g., 'gsd')
  * @param {string} pathPrefix - Path prefix for file references
- * @param {string} runtime - Target runtime (.gemini' or 'opencode')
+ * @param {string} runtime - Target runtime ('gemini' or 'opencode')
  */
 function copyFlattenedCommands(srcDir, destDir, prefix, pathPrefix, runtime) {
   if (!fs.existsSync(srcDir)) {
@@ -434,7 +434,7 @@ function copyFlattenedCommands(srcDir, destDir, prefix, pathPrefix, runtime) {
  * @param {string} srcDir - Source directory
  * @param {string} destDir - Destination directory
  * @param {string} pathPrefix - Path prefix for file references
- * @param {string} runtime - Target runtime (.gemini' or 'opencode')
+ * @param {string} runtime - Target runtime ('gemini' or 'opencode')
  */
 function copyWithPathReplacement(srcDir, destDir, pathPrefix, runtime) {
   const isOpencode = runtime === 'opencode';
@@ -537,9 +537,9 @@ function cleanupOrphanedHooks(settings) {
  * Uninstall GSD from the specified directory for a specific runtime
  * Removes only GSD-specific files/directories, preserves user content
  * @param {boolean} isGlobal - Whether to uninstall from global or local
- * @param {string} runtime - Target runtime (.gemini' or 'opencode')
+ * @param {string} runtime - Target runtime ('gemini' or 'opencode')
  */
-function uninstall(isGlobal, runtime = .gemini') {
+function uninstall(isGlobal, runtime = 'gemini') {
   const isOpencode = runtime === 'opencode';
   const dirName = getDirName(runtime);
 
@@ -829,9 +829,9 @@ function verifyFileInstalled(filePath, description) {
 /**
  * Install to the specified directory for a specific runtime
  * @param {boolean} isGlobal - Whether to install globally or locally
- * @param {string} runtime - Target runtime (.gemini' or 'opencode')
+ * @param {string} runtime - Target runtime ('gemini' or 'opencode')
  */
-function install(isGlobal, runtime = .gemini') {
+function install(isGlobal, runtime = 'gemini') {
   const isOpencode = runtime === 'opencode';
   const dirName = getDirName(runtime);  // .opencode or .gemini (for local installs)
   const src = path.join(__dirname, '..');
@@ -953,7 +953,7 @@ function install(isGlobal, runtime = .gemini') {
 
   // Copy rules with path replacement
   const rulesSrc = path.join(src, 'rules');
-  const rulesDest = path.join(geminiDir, 'rules');
+  const rulesDest = path.join(targetDir, 'rules');
   if (fs.existsSync(rulesSrc)) {
     copyWithPathReplacement(rulesSrc, rulesDest, pathPrefix);
     console.log(`  ${green}✓${reset} Installed rules`);
@@ -970,12 +970,10 @@ function install(isGlobal, runtime = .gemini') {
       failures.push('CHANGELOG.md');
     }
   }
-    }
-  }
 
   // Copy CHANGELOG-gemini.md
   const changelogGeminiSrc = path.join(src, 'CHANGELOG-gemini.md');
-  const changelogGeminiDest = path.join(geminiDir, 'get-shit-done', 'CHANGELOG-gemini.md');
+  const changelogGeminiDest = path.join(targetDir, 'get-shit-done', 'CHANGELOG-gemini.md');
   if (fs.existsSync(changelogGeminiSrc)) {
     fs.copyFileSync(changelogGeminiSrc, changelogGeminiDest);
     if (verifyFileInstalled(changelogGeminiDest, 'CHANGELOG-gemini.md')) {
@@ -995,7 +993,7 @@ function install(isGlobal, runtime = .gemini') {
   }
 
   // Copy hooks from dist/ (bundled with dependencies)
-  const hooksSrc = path.join(src, 'hooks', 'dist');
+  const hooksSrc = path.join(src, 'hooks');
   if (fs.existsSync(hooksSrc)) {
     const hooksDest = path.join(targetDir, 'hooks');
     fs.mkdirSync(hooksDest, { recursive: true });
@@ -1068,9 +1066,9 @@ function install(isGlobal, runtime = .gemini') {
  * @param {object} settings - Settings object
  * @param {string} statuslineCommand - Statusline command
  * @param {boolean} shouldInstallStatusline - Whether to install statusline
- * @param {string} runtime - Target runtime (.gemini' or 'opencode')
+ * @param {string} runtime - Target runtime ('gemini' or 'opencode')
  */
-function finishInstall(settingsPath, settings, statuslineCommand, shouldInstallStatusline, runtime = .gemini') {
+function finishInstall(settingsPath, settings, statuslineCommand, shouldInstallStatusline, runtime = 'gemini') {
   const isOpencode = runtime === 'opencode';
 
   if (shouldInstallStatusline && !isOpencode) {
@@ -1186,11 +1184,11 @@ function promptRuntime(callback) {
     rl.close();
     const choice = answer.trim() || '1';
     if (choice === '3') {
-      callback([.gemini', 'opencode']);
+      callback(['gemini', 'opencode']);
     } else if (choice === '2') {
       callback(['opencode']);
     } else {
-      callback([.gemini']);
+      callback(['gemini']);
     }
   });
 }
@@ -1264,11 +1262,11 @@ function installAllRuntimes(runtimes, isGlobal, isInteractive) {
   }
 
   // Handle statusline for Gemini CLI only (OpenCode uses themes)
-  const claudeResult = results.find(r => r.runtime === .gemini');
+  const claudeResult = results.find(r => r.runtime === 'gemini');
 
   if (claudeResult) {
     handleStatusline(claudeResult.settings, isInteractive, (shouldInstallStatusline) => {
-      finishInstall(claudeResult.settingsPath, claudeResult.settings, claudeResult.statuslineCommand, shouldInstallStatusline, .gemini');
+      finishInstall(claudeResult.settingsPath, claudeResult.settings, claudeResult.statuslineCommand, shouldInstallStatusline, 'gemini');
 
       // Finish OpenCode install if present
       const opencodeResult = results.find(r => r.runtime === 'opencode');
@@ -1294,10 +1292,10 @@ if (hasGlobal && hasLocal) {
   // Uninstall mode
   if (!hasGlobal && !hasLocal) {
     console.error(`  ${yellow}--uninstall requires --global or --local${reset}`);
-    console.error(`  Example: npx get-shit-done-gemini -.gemini --global --uninstall`);
+    console.error(`  Example: npx get-shit-done-gemini --gemini --global --uninstall`);
     process.exit(1);
   }
-  const runtimes = selectedRuntimes.length > 0 ? selectedRuntimes : [.gemini'];
+  const runtimes = selectedRuntimes.length > 0 ? selectedRuntimes : ['gemini'];
   for (const runtime of runtimes) {
     uninstall(hasGlobal, runtime);
   }
@@ -1312,12 +1310,12 @@ if (hasGlobal && hasLocal) {
   }
 } else if (hasGlobal || hasLocal) {
   // Location specified but no runtime - default to Gemini CLI
-  installAllRuntimes([.gemini'], hasGlobal, false);
+  installAllRuntimes(['gemini'], hasGlobal, false);
 } else {
   // Fully interactive: prompt for runtime, then location
   if (!process.stdin.isTTY) {
     console.log(`  ${yellow}Non-interactive terminal detected, defaulting to Gemini CLI global install${reset}\n`);
-    installAllRuntimes([.gemini'], true, false);
+    installAllRuntimes(['gemini'], true, false);
   } else {
     promptRuntime((runtimes) => {
       promptLocation(runtimes);

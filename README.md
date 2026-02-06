@@ -95,8 +95,8 @@ npx get-shit-done-gemini@latest
 
 ```bash
 # Gemini CLI
-npx get-shit-done-gemini -.gemini --global   # Install to ~/.gemini/
-npx get-shit-done-gemini -.gemini --local    # Install to ./.gemini/
+npx get-shit-done-gemini --gemini --global   # Install to ~/.gemini/
+npx get-shit-done-gemini --gemini --local    # Install to ./.gemini/
 
 # OpenCode (open source, free models)
 npx get-shit-done-gemini --opencode --global # Install to ~/.opencode/
@@ -106,7 +106,7 @@ npx get-shit-done-gemini --both --global     # Install to both directories
 ```
 
 Use `--global` (`-g`) or `--local` (`-l`) to skip the location prompt.
-Use `-.gemini`, `--opencode`, or `--both` to skip the runtime prompt.
+Use `--gemini`, `--opencode`, or `--both` to skip the runtime prompt.
 
 </details>
 
@@ -118,7 +118,7 @@ Clone the repository and run the installer locally:
 ```bash
 git clone https://github.com/glittercowboy/get-shit-done.git
 cd get-shit-done
-node bin/install.js -.gemini --local
+node bin/install.js --gemini --local
 ```
 
 Installs to `./.gemini/` for testing modifications before contributing.
@@ -554,11 +554,11 @@ To remove GSD completely:
 
 ```bash
 # Global installs
-npx get-shit-done-gemini -.gemini --global --uninstall
+npx get-shit-done-gemini --gemini --global --uninstall
 npx get-shit-done-gemini --opencode --global --uninstall
 
 # Local installs (current project)
-npx get-shit-done-gemini -.gemini --local --uninstall
+npx get-shit-done-gemini --gemini --local --uninstall
 npx get-shit-done-gemini --opencode --local --uninstall
 ```
 
